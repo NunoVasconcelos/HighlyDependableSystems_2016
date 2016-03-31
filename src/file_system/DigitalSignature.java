@@ -13,10 +13,10 @@ public class DigitalSignature {
         boolean verifies = false;
         X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(public_key.getEncoded());
         try {
-            KeyFactory keyFactory = KeyFactory.getInstance("DSA", "SUN");
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PublicKey pubKey =
                     keyFactory.generatePublic(pubKeySpec);
-            java.security.Signature sig = java.security.Signature.getInstance("SHA1withDSA", "SUN");
+            java.security.Signature sig = java.security.Signature.getInstance("SHA1withRSA");
             sig.initVerify(pubKey);
 
             // Input data to be verified

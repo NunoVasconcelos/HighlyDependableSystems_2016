@@ -2,8 +2,10 @@ package file_system.fs_library;
 
 import file_system.ContentHashBlock;
 import file_system.DigitalSignature;
+import file_system.PTEIDLIB_Cert_Validation;
 import file_system.PublicKeyBlock;
 import file_system.SHA1;
+import file_system.eIDLib_PKCS11_test;
 import file_system.fs_blockServer.RmiServerIntf;
 import pteidlib.PTEID_Certif;
 import pteidlib.PteidException;
@@ -21,6 +23,37 @@ import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import pteidlib.PTEID_ADDR;
+import pteidlib.PTEID_Certif;
+import pteidlib.PTEID_ID;
+import pteidlib.PTEID_PIC;
+import pteidlib.PTEID_Pin;
+import pteidlib.PTEID_TokenInfo;
+import pteidlib.PteidException;
+import pteidlib.pteid;
+
+import java.io.FileOutputStream;
+import java.nio.charset.Charset;
+import java.lang.reflect.Method;
+import javax.crypto.*;
+
+import java.io.IOException;
+import java.io.FileInputStream;
+
+//import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
+//import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
+//import sun.security.pkcs11.wrapper.CK_MECHANISM;
+//import sun.security.pkcs11.wrapper.CK_SESSION_INFO;
+//import sun.security.pkcs11.wrapper.PKCS11;
+//import sun.security.pkcs11.wrapper.PKCS11Constants;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import java.security.cert.*;
+import java.util.*;
+import java.util.EnumSet;
+import java.security.cert.PKIXRevocationChecker.Option;
 
 public class FS_Library
 {
@@ -33,16 +66,6 @@ public class FS_Library
 	public void fs_init() throws Exception {
 		// create RMI connection with block server
 		this.blockServer = (RmiServerIntf) Naming.lookup("//localhost/RmiServer");
-
-		System.loadLibrary("pteidlibj");
-        pteid.Init(""); // Initializes the eID Lib
-        pteid.SetSODChecking(false); // Don't check the integrity of the ID, address and photo (!)
-        //PKCS11 pkcs11;
-        String osName = System.getProperty("os.name");
-        String javaVersion = System.getProperty("java.version");
-        System.out.println("Java version: " + javaVersion);
-        java.util.Base64.Encoder encoder = java.util.Base64.getEncoder();
-        String libName = "libpteidpkcs11.so";
 
 		// get client Public Key Certificate from the EID Card and register in the Key Server aka Block Server
         initPublicKey();
@@ -205,35 +228,15 @@ public class FS_Library
 	}
 
     // TODO: change this method to use CC
-	private byte[] signData(byte[] buffer) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        Signature dsa = Signature.getInstance("SHA1withDSA", "SUN");
-        dsa.initSign(this.priv);
-        dsa.update(buffer);
-        byte[] realSig = dsa.sign();
-		return realSig;
+	private byte[] signData(byte[] buffer) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {     
+		return eIDLib_PKCS11_test.main(buffer);
 	}
 
     private void initPublicKey() throws CertificateException, FileNotFoundException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, CertPathValidatorException, PteidException {
-        X509Certificate cert = getCertFromByteArray(getCertificateInBytes(0));
-        PKIXCertPathValidatorResult result = validateCertificate(cert);
-        // TODO: analyze result
-        System.out.println("validateCertificate: " + result);
-        this.pub = cert.getPublicKey();
+        this.pub = PTEIDLIB_Cert_Validation.main();
     }
 
-    private static  byte[] getCertificateInBytes(int n) throws PteidException {
-        PTEID_Certif[] certs = pteid.GetCertificates();
-        byte[] certificate_bytes = certs[n].certif;
-        //pteid.Exit(pteid.PTEID_EXIT_LEAVE_CARD); // OBRIGATORIO Termina a eID Lib
-        return certificate_bytes;
-    }
-
-	public static X509Certificate getCertFromByteArray(byte[] certificateEncoded) throws CertificateException {
-		CertificateFactory f = CertificateFactory.getInstance("X.509");
-		InputStream in = new ByteArrayInputStream(certificateEncoded);
-		X509Certificate cert = (X509Certificate)f.generateCertificate(in);
-		return cert;
-	}
+  
 
     // TODO: code below not working
 	private PKIXCertPathValidatorResult validateCertificate(X509Certificate cert) throws CertificateException, FileNotFoundException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, CertPathValidatorException {

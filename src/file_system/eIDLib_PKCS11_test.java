@@ -1,3 +1,5 @@
+package file_system;
+
 import pteidlib.PTEID_ADDR;
 import pteidlib.PTEID_Certif;
 import pteidlib.PTEID_ID;
@@ -22,6 +24,7 @@ import sun.security.pkcs11.wrapper.PKCS11;
 import sun.security.pkcs11.wrapper.PKCS11Constants;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import java.security.cert.CertificateException;
@@ -29,10 +32,11 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
 
-public class eIDLib_PKCS11_test {
+public final class eIDLib_PKCS11_test {
 
 
-    public static void main(String args[])  {
+    public static byte[] main(byte[] data)  {
+    	byte[] signature = null;
         try {
         System.out.println("            //Load the PTEidlibj");
         System.loadLibrary("pteidlibj");
@@ -116,7 +120,7 @@ public class eIDLib_PKCS11_test {
             
             // sign
             System.out.println("            //sign");
-            byte[] signature = pkcs11.C_Sign(p11_session, "data".getBytes(Charset.forName("UTF-8")));
+            signature = pkcs11.C_Sign(p11_session, data);
             System.out.println("            //signature:"+encoder.encode(signature));
 
 		//...
@@ -129,6 +133,18 @@ public class eIDLib_PKCS11_test {
             System.out.println("[Catch] Exception: " + e.getMessage());
             e.printStackTrace();
         }
+        
+        FileOutputStream fos;
+		try {
+			fos = new FileOutputStream("signature");
+			fos.write(signature);
+			fos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return signature;
     }
     
     
