@@ -31,17 +31,17 @@ public class Client
 		}
 
 		// write content from local file into block server
-		int pos = 1;
-		int size = content.length;
+		int pos = 0;
+		int size = content.length-1;
 		System.out.println("writing content from file: " + path.toString() + ", pos: " + pos + ", size: " + size);
 		lib.fs_write(pos, content);
 
 		// read content from stored file on block server
-		pos = 1;
-		size = 61632048;
+		pos = 0;
+		size = 50;
 		System.out.println("reading content from my file: pos: " + pos + ", size: " + size);
 		byte[] bytesReturned = lib.fs_read(publicKeys.get(0), pos, size);
-		File output = new File("output.txt");
+		File output = new File("output2.txt");
 		try{
 			FileOutputStream outputStream = new FileOutputStream(output);
 			outputStream.write(bytesReturned);

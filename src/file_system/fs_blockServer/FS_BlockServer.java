@@ -26,7 +26,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		System.out.println("RMI server started");
 
         try { //special exception handler for registry creation
-            LocateRegistry.createRegistry(1095);
+            LocateRegistry.createRegistry(1099);
             System.out.println("java RMI registry created.");
         } catch (RemoteException e) {
             //do nothing, error means registry already exists

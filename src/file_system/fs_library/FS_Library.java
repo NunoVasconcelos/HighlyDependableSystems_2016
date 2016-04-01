@@ -199,10 +199,10 @@ public class FS_Library
             byte[] result = "".getBytes(); //Byte stream with all the data from the blocks desired
 
             // take content from blocks to be returned
-            for(int i = firstBlock; i <= lastBlock; i++) {
+            for(String id : contentHashBlockIds) {
                 byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
-                ContentHashBlock currentBlock = (ContentHashBlock) this.blockServer.get(contentHashBlockIds.get(i));
-                if(!(SHA1.SHAsum(currentBlock.getData()).equals(contentHashBlockIds.get(i))))
+                ContentHashBlock currentBlock = (ContentHashBlock) this.blockServer.get(id);
+                if(!(SHA1.SHAsum(currentBlock.getData()).equals(id)))
                     return "fs_read - Error: integrity not guaranteed".getBytes();
                 System.arraycopy(result, 0, dstByteArray, 0, result.length);
                 System.arraycopy(currentBlock.getData(), 0, dstByteArray, result.length, TAMANHO_BLOCO);
