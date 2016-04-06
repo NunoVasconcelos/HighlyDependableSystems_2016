@@ -1,1 +1,2 @@
 To configure testing libraries (IntelliJ): https://www.jetbrains.com/help/idea/2016.1/configuring-testing-libraries.html?origin=old_help
+To run on PC labs, add this argument: -Djava.library.path=/usr/local/lib64/pteid_jni/
