@@ -1,16 +1,22 @@
 package file_system.fs_library;
 
-import file_system.*;
+import file_system.ContentHashBlock;
+import file_system.DigitalSignature;
+import file_system.PublicKeyBlock;
+import file_system.SHA1;
 import file_system.fs_blockServer.RmiServerIntf;
 import pteidlib.PteidException;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.security.*;
 import java.security.cert.CertPathValidatorException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
@@ -22,121 +28,148 @@ import java.util.List;
 
 public class FS_Library {
 	public static final int TAMANHO_BLOCO = 16000;
-	private RmiServerIntf blockServer;
 	private PrivateKey priv;
 	private PublicKey pub;
 	private String id;
+	ArrayList<String> serverPorts = new ArrayList<>(Arrays.asList("1099", "1098", "1097", "1096"));
+	ArrayList<RmiServerIntf> servers = new ArrayList<>();
 
 	public void fs_init() throws Exception {
-		// create RMI connection with block server
-		this.blockServer = (RmiServerIntf) Naming.lookup("//localhost/RmiServer");
+		RmiServerIntf server;
+
+		for(String port : this.serverPorts) {
+			// create RMI connection with block server
+			server = (RmiServerIntf) Naming.lookup("//localhost/RmiServer" + port);
+			servers.add(server);
+		}
 
 		// get client Public Key Certificate from the EID Card and register in the Key Server aka Block Server
-		initPublicKey();
+		initPublicKey(); // now doing init of privKey as well
 
 		// store publicKey on Key Server (Block Server)
-		this.blockServer.storePubKey(this.pub);
+        fileSystemRequest("storePubKey", new ArrayList<>(Arrays.asList(this.pub)));
 
 		// generate client id from publicKey
 		this.id = SHA1.SHAsum(this.pub.getEncoded());
 	}
 
+    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method;
+        Object[] argsArray = args.toArray();
+        Class[] classes = new Class[args.size()];
+        int i = 0;
 
-	public void fs_write(int pos, byte[] content) {
+        for(Object arg : argsArray) {
+            classes[i] = arg.getClass();
+            i++;
+        }
+
+        Object obj = null;
+
+        for(RmiServerIntf server : servers) {
+            method = server.getClass().getDeclaredMethod(methodName, classes);
+            obj = method.invoke(server, argsArray);
+        }
+
+        // TODO: Implement the appropriate replication protocol (from the book)
+
+        return obj;
+    }
+
+
+    public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		PublicKeyBlock publicKeyBlock;
-		try {
-			// get publicKeyBlock (which contains content hash block ids)
-			publicKeyBlock = (PublicKeyBlock) this.blockServer.get(this.id);
-			List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
-			List<String> newHashBlockIds = new ArrayList<String>();
 
-			// if is not the file initialization, then check integrity
-			String concatenatedIds = "";
-			if (!contentHashBlockIds.isEmpty()) {
-				// verify publicKeyBlock integrity
-				for (String id : contentHashBlockIds) {
-					concatenatedIds += id;
-				}
-				DigitalSignature ds = new DigitalSignature();
-				boolean integrityVerified = ds.verifySign(concatenatedIds.getBytes(), publicKeyBlock.getSignature(), this.pub);
-				if (!integrityVerified) {
-					System.out.println("fs_write - Error: integrity not guaranteed");
-					return;
-				}
-			}
+        // get publicKeyBlock (which contains content hash block ids)
+        String clientId = SHA1.SHAsum(this.pub.getEncoded());
+        publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(clientId)));
+        List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
+        List<String> newHashBlockIds = new ArrayList<>();
+
+        // if is not the file initialization, then check integrity
+        String concatenatedIds = "";
+        if (!contentHashBlockIds.isEmpty()) {
+            // verify publicKeyBlock integrity
+            for (String id : contentHashBlockIds) {
+                concatenatedIds += id;
+            }
+            DigitalSignature ds = new DigitalSignature();
+            boolean integrityVerified = ds.verifySign(concatenatedIds.getBytes(), publicKeyBlock.getSignature(), this.pub);
+            if (!integrityVerified) {
+                System.out.println("fs_write - Error: integrity not guaranteed");
+                return;
+            }
+        }
 
 
-			// get blocks that are covered by pos+size
-			int firstBlock = pos / TAMANHO_BLOCO;
-			int lastBlock = (pos + content.length) / TAMANHO_BLOCO;
-			byte[] result = "".getBytes(); //Byte stream with all the data from the blocks desired
+        // get blocks that are covered by pos+size
+        int firstBlock = pos / TAMANHO_BLOCO;
+        int lastBlock = (pos + content.length) / TAMANHO_BLOCO;
+        byte[] result = "".getBytes(); //Byte stream with all the data from the blocks desired
 
-			if (!contentHashBlockIds.isEmpty()) {
-				for (int i = firstBlock; i <= lastBlock; i++) {
-					byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
-					ContentHashBlock currentBlock = (ContentHashBlock) this.blockServer.get(contentHashBlockIds.get(i));
-					if (!(SHA1.SHAsum(currentBlock.getData()) == contentHashBlockIds.get(i))) {
-						System.out.println("fs_write - Error: integrity not guaranteed");
-						return;
-					}
-					System.arraycopy(result, 0, dstByteArray, 0, result.length);
-					System.arraycopy(currentBlock.getData(), 0, dstByteArray, result.length, TAMANHO_BLOCO);
-					result = dstByteArray;
+        if (!contentHashBlockIds.isEmpty()) {
+            for (int i = firstBlock; i <= lastBlock; i++) {
+                byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
+                ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(contentHashBlockIds.get(i))));
+                if (!(SHA1.SHAsum(currentBlock.getData()) == contentHashBlockIds.get(i))) {
+                    System.out.println("fs_write - Error: integrity not guaranteed");
+                    return;
+                }
+                System.arraycopy(result, 0, dstByteArray, 0, result.length);
+                System.arraycopy(currentBlock.getData(), 0, dstByteArray, result.length, TAMANHO_BLOCO);
+                result = dstByteArray;
 
-					//Change the bytes from the blocks retrieved to the content provided by the user
-					System.arraycopy(content, 0, result, result.length % TAMANHO_BLOCO, content.length);
-				}
-			} else {
-				result = content;
-			}
+                //Change the bytes from the blocks retrieved to the content provided by the user
+                System.arraycopy(content, 0, result, result.length % TAMANHO_BLOCO, content.length);
+            }
+        } else {
+            result = content;
+        }
 
-			// update/create content blocks and write it on Block Server (put_h)
-			int actualSize = result.length;
-			for (int i = 0; i < result.length; i += TAMANHO_BLOCO) {
-				byte[] dataToBlock = new byte[TAMANHO_BLOCO];
-				if (actualSize < TAMANHO_BLOCO)    //If it is the last iteration (the last block) and it has a size<16000
-					System.arraycopy(result, 0, dataToBlock, 0, actualSize);
-				else
-					System.arraycopy(result, i, dataToBlock, 0, TAMANHO_BLOCO);
+        // update/create content blocks and write it on Block Server (put_h)
+        int actualSize = result.length;
+        for (int i = 0; i < result.length; i += TAMANHO_BLOCO) {
+            byte[] dataToBlock = new byte[TAMANHO_BLOCO];
+            if (actualSize < TAMANHO_BLOCO)    //If it is the last iteration (the last block) and it has a size<16000
+                System.arraycopy(result, 0, dataToBlock, 0, actualSize);
+            else
+                System.arraycopy(result, i, dataToBlock, 0, TAMANHO_BLOCO);
 
-				actualSize -= TAMANHO_BLOCO;
+            actualSize -= TAMANHO_BLOCO;
 
-				String dataBlockHash = SHA1.SHAsum(dataToBlock);
-				String id = this.blockServer.put_h(dataToBlock);
+            String dataBlockHash = SHA1.SHAsum(dataToBlock);
+            String id = (String) fileSystemRequest("put_h", new ArrayList<>(Arrays.asList(dataToBlock)));
 
-				if (id.equals("-1")) {
-					System.out.println("Error: Hashing function not successful (put_h)");
-					return;
-				} else if (!(dataBlockHash.equals(id))) {        //Integrity check
-					System.out.println("Error: integrity not guaranteed (put_h)");
-					return;
-				} else {
-					newHashBlockIds.add(dataBlockHash);
-				}
-			}
+            if (id.equals("-1")) {
+                System.out.println("Error: Hashing function not successful (put_h)");
+                return;
+            } else if (!(dataBlockHash.equals(id))) {        //Integrity check
+                System.out.println("Error: integrity not guaranteed (put_h)");
+                return;
+            } else {
+                newHashBlockIds.add(dataBlockHash);
+            }
+        }
 
-			//Sign the concatenation of hashesIds
-			concatenatedIds = "";
-			for (String contentId : newHashBlockIds) {
-				concatenatedIds += contentId;
-			}
-			byte[] signature = signDataWithCC(concatenatedIds.getBytes());
-			publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature);    //new block updated
+        //Sign the concatenation of hashesIds
+        concatenatedIds = "";
+        for (String contentId : newHashBlockIds) {
+            concatenatedIds += contentId;
+        }
+        byte[] signature = signData(concatenatedIds.getBytes());
+        publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature);    //new block updated
 
-			// write updated publicKeyBlock (put_k)
-			String hashPub = this.blockServer.put_k(publicKeyBlock, signature, this.pub);
+        // write updated publicKeyBlock (put_k)
+        String hashPub = (String) fileSystemRequest("put_k", new ArrayList<>(Arrays.asList(publicKeyBlock, signature, this.pub)));
 
-			// integrity check: check if returned id == this.id
-			if (id.equals(hashPub))
-				System.out.println("File stored successfully!");
-			else
-				System.out.println("Error: integrity not guaranteed");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        // integrity check: check if returned id == this.id
+        if (id.equals(hashPub))
+            System.out.println("File stored successfully!");
+        else
+            System.out.println("Error: integrity not guaranteed");
 	}
 
-	public byte[] fs_read(PublicKey publicKey, int pos, int size) throws RemoteException, NoSuchAlgorithmException {
+    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws RemoteException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		PublicKeyBlock publicKeyBlock;
 		byte[] bytesRead = new byte[size];
 		PublicKey pubKey;
@@ -147,7 +180,7 @@ public class FS_Library {
 
 		// get publicKeyBlock (which contains content hash block ids)
 		String clientId = SHA1.SHAsum(pubKey.getEncoded());
-		publicKeyBlock = (PublicKeyBlock) this.blockServer.get(clientId);
+        publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(clientId)));
 
 		// verify publicKeyBlock integrity
 		List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
@@ -167,8 +200,8 @@ public class FS_Library {
 			// take content from blocks to be returned
 			for (String id : contentHashBlockIds) {
 				byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
-				ContentHashBlock currentBlock = (ContentHashBlock) this.blockServer.get(id);
-				if (!(SHA1.SHAsum(currentBlock.getData()).equals(id)))
+                ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(id)));
+                if (!(SHA1.SHAsum(currentBlock.getData()).equals(id)))
 					return "fs_read - Error: integrity not guaranteed".getBytes();
 				System.arraycopy(result, 0, dstByteArray, 0, result.length);
 				System.arraycopy(currentBlock.getData(), 0, dstByteArray, result.length, TAMANHO_BLOCO);
@@ -183,17 +216,11 @@ public class FS_Library {
 		return bytesRead;
 	}
 
-	public List<PublicKey> fs_list() {
-		List<PublicKey> publicKeys = new ArrayList<>();
-		try {
-			publicKeys = this.blockServer.readPublicKeys();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return publicKeys;
+	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+		return (List<PublicKey>) fileSystemRequest("readPublicKeys", new ArrayList<>());
 	}
 
-	private void initPublicKey() throws CertificateException, FileNotFoundException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, CertPathValidatorException, PteidException, NoSuchProviderException {
+    private void initPublicKey() throws CertificateException, FileNotFoundException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, CertPathValidatorException, PteidException, NoSuchProviderException {
 		//this.pub = PTEIDLIB_Cert_Validation.main();
 		generateKeys();
 	}
@@ -207,17 +234,13 @@ public class FS_Library {
 		this.pub = pair.getPublic();
 	}
 
-	private byte[] signDataWithCC(byte[] buffer) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-		//return eIDLib_PKCS11_test.main(buffer);
-		return signData(buffer);
-	}
-
 	private byte[] signData(byte[] buffer) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-		Signature dsa = Signature.getInstance("SHA1withRSA");
+        Signature dsa = Signature.getInstance("SHA1withRSA");
 		dsa.initSign(this.priv);
 		dsa.update(buffer);
-		byte[] realSig = dsa.sign();
-		return realSig;
+		byte[] signature = dsa.sign();
+		return signature;
+        //return eIDLib_PKCS11_test.main(buffer);
 	}
 }
 

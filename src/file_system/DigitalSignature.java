@@ -4,9 +4,6 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
 
-/**
- * Created by andre on 04/03/2016.
- */
 public class DigitalSignature {
 
     public boolean verifySign(byte[] data, byte[] signature, PublicKey public_key) {

@@ -1,36 +1,20 @@
-package file_system;
+package file_system.fs_library;
 
-import pteidlib.PTEID_ADDR;
 import pteidlib.PTEID_Certif;
-import pteidlib.PTEID_ID;
-import pteidlib.PTEID_PIC;
-import pteidlib.PTEID_Pin;
-import pteidlib.PTEID_TokenInfo;
 import pteidlib.PteidException;
 import pteidlib.pteid;
-
-import java.io.FileOutputStream;
-import java.nio.charset.Charset;
-import java.lang.reflect.Method;
-import javax.crypto.*;
-
-import java.io.IOException;
-import java.io.FileInputStream;
-
-import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
-import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
-import sun.security.pkcs11.wrapper.CK_MECHANISM;
-import sun.security.pkcs11.wrapper.CK_SESSION_INFO;
 import sun.security.pkcs11.wrapper.PKCS11;
-import sun.security.pkcs11.wrapper.PKCS11Constants;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.security.PublicKey;
 import java.security.cert.*;
-import java.util.*;
-import java.util.EnumSet;
 import java.security.cert.PKIXRevocationChecker.Option;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public final class PTEIDLIB_Cert_Validation {

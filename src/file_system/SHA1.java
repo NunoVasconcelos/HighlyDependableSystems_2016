@@ -4,9 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
-/**
- * Created by andre on 02/03/2016.
- */
 public final class SHA1
 {
 

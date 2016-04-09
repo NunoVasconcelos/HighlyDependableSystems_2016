@@ -1,13 +1,9 @@
 package file_system;
 
 import java.io.Serializable;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Nuno Vasconcelos on 05/03/2016.
- */
 public class PublicKeyBlock extends Block implements Serializable {
     private List<String> contentHashBlockIds = new ArrayList<>();
     private byte[] signature;

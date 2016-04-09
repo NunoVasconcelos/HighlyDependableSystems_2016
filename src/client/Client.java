@@ -21,14 +21,10 @@ public class Client
 		List<PublicKey> publicKeys = lib.fs_list();
 
 		// read local file
-		byte[] content = "-1".getBytes();
 		Path path = Paths.get(args[0]);
-		try {
-			content = Files.readAllBytes(path);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+		byte[] content = Files.readAllBytes(path);
+
+
 
 		// write content from local file into block server
 		int pos = 0;
@@ -42,13 +38,10 @@ public class Client
 		System.out.println("reading content from my file: pos: " + pos + ", size: " + size);
 		byte[] bytesReturned = lib.fs_read(publicKeys.get(0), pos, size);
 		File output = new File("output2.txt");
-		try{
-			FileOutputStream outputStream = new FileOutputStream(output);
-			outputStream.write(bytesReturned);
-			outputStream.flush();
-			outputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		FileOutputStream outputStream = new FileOutputStream(output);
+		outputStream.write(bytesReturned);
+		outputStream.flush();
+		outputStream.close();
+
 	}
 }

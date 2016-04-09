@@ -1,16 +1,17 @@
 package file_system.fs_blockServer;
 
 import file_system.*;
+import sun.security.rsa.RSAPublicKeyImpl;
 
 import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.rmi.Naming;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.rmi.registry.*;
 import java.util.List;
 
 public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf {
@@ -26,22 +27,23 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		System.out.println("RMI server started");
 
         try { //special exception handler for registry creation
-            LocateRegistry.createRegistry(1099);
-            System.out.println("java RMI registry created.");
+            LocateRegistry.createRegistry(Integer.parseInt(args[0]));
+            System.out.println("java RMI registry created on port " + args[0]);
         } catch (RemoteException e) {
             //do nothing, error means registry already exists
-            System.out.println("java RMI registry already exists.");
+            System.out.println("java RMI registry already exists on port " + args[0]);
         }
 
 		//Instantiate RmiServer
 		FS_BlockServer obj = new FS_BlockServer();
 
 		// Bind this object instance to the name "RmiServer"
-		Naming.rebind("//localhost/RmiServer", obj);
+		Naming.rebind("//localhost/RmiServer" + args[0], obj);
 		System.out.println("PeerServer bound in registry");
 	}
 
     public Block get(String id) {
+        System.out.println("[Method Call] get("+ id +")");
 		// if publicKeyBlock do not exist, create
 		if (!blocks.containsKey(id)) {
 			PublicKeyBlock publicKeyBlock = new PublicKeyBlock();
@@ -53,7 +55,8 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		}
 	}
 
-	public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, PublicKey public_key) throws NoSuchAlgorithmException {
+	public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException {
+        System.out.println("[Method Call] put_k("+ publicKeyBlock + ", " + signature + ", " + public_key + ")");
 		// check integrity
 		List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
 		String concatenatedIds = "";
@@ -75,17 +78,22 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 
 	// store contentHashBlock
 	public String put_h(byte[] data) throws NoSuchAlgorithmException {
+        System.out.println("[Method Call] put_h("+ data +")");
         String id = SHA1.SHAsum(data);
 		ContentHashBlock contentHashBlock = new ContentHashBlock(data);
 		blocks.put(id, contentHashBlock);
 		return id;
 	}
 
-	public void storePubKey(PublicKey publicKey) {
+    // store publicKey
+	public void storePubKey(RSAPublicKeyImpl publicKey) {
+        System.out.println("[Method Call] storePubKey("+ publicKey +")");
 		publicKeys.add(publicKey);
 	}
 
+    // get all public keys
 	public List<PublicKey> readPublicKeys() {
-		return publicKeys;
+        System.out.println("[Method Call] readPublicKeys()");
+        return publicKeys;
 	}
 }
