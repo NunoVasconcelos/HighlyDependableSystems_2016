@@ -43,37 +43,24 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	}
 
     public Block get(String id) {
-        System.out.println("[Method Call] get("+ id +")");
 		// if publicKeyBlock do not exist, create
 		if (!blocks.containsKey(id)) {
 			PublicKeyBlock publicKeyBlock = new PublicKeyBlock();
 			this.blocks.put(id, publicKeyBlock);
 			return publicKeyBlock;
 		} else {
-			// check integrity
 			return this.blocks.get(id);
 		}
 	}
 
-	public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException {
-        System.out.println("[Method Call] put_k("+ publicKeyBlock + ", " + signature + ", " + public_key + ")");
-		// check integrity
-		List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
-		String concatenatedIds = "";
-		for(String contentId : contentHashBlockIds) {
-			concatenatedIds += contentId;
-		}
-        concatenatedIds += publicKeyBlock.getTimestamp();
-		boolean integrityVerified = DigitalSignature.verifySign(concatenatedIds.getBytes(), signature, public_key);
-        String id = "Error: integrity not guaranteed";
-		if (integrityVerified) {
-			// store publicKeyBlock
-            id = SHA1.SHAsum(public_key.getEncoded());
-            blocks.put(id, publicKeyBlock);
-		} else {
-			System.out.println("put_k - Error: integrity not guaranteed");
-		}
-		return id;
+    public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException, IntegrityViolationException {
+        String id;
+        // check integrity
+		VerifyIntegrity.verify(publicKeyBlock, signature, public_key);
+        // store publicKeyBlock
+        id = SHA1.SHAsum(public_key.getEncoded());
+        blocks.put(id, publicKeyBlock);
+        return id;
 	}
 
 	// store ContentHashBlock

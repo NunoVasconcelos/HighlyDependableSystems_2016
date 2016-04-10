@@ -1,9 +1,6 @@
 package file_system.fs_library;
 
-import file_system.ContentHashBlock;
-import file_system.DigitalSignature;
-import file_system.PublicKeyBlock;
-import file_system.SHA1;
+import file_system.*;
 import file_system.fs_blockServer.RmiServerIntf;
 import pteidlib.PteidException;
 
@@ -94,7 +91,7 @@ public class FS_Library {
     }
 
 
-    public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException {
+    public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, IntegrityViolationException {
 		PublicKeyBlock publicKeyBlock;
 
         // get publicKeyBlock (which contains content hash block ids)
@@ -104,18 +101,10 @@ public class FS_Library {
         List<String> newHashBlockIds = new ArrayList<>();
 
         // if is not the file initialization, then check integrity
-        String concatenatedIds = "";
+        String concatenatedIds;
         if (!contentHashBlockIds.isEmpty()) {
             // verify publicKeyBlock integrity
-            for (String id : contentHashBlockIds) {
-                concatenatedIds += id;
-            }
-            concatenatedIds += publicKeyBlock.getTimestamp();
-            boolean integrityVerified = DigitalSignature.verifySign(concatenatedIds.getBytes(), publicKeyBlock.getSignature(), this.pub);
-            if (!integrityVerified) {
-                System.out.println("fs_write - Error: integrity not guaranteed");
-                return;
-            }
+            VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), this.pub);
         }
 
 
@@ -193,7 +182,7 @@ public class FS_Library {
             System.out.println("Error: integrity not guaranteed");
 	}
 
-    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws IOException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws IOException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IntegrityViolationException {
 		PublicKeyBlock publicKeyBlock;
 		byte[] bytesRead = new byte[size];
 		PublicKey pubKey;
@@ -207,34 +196,24 @@ public class FS_Library {
         publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(clientId)));
 
 		// verify publicKeyBlock integrity
-		List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
-		String concatenatedIds = "";
-		for (String contentId : contentHashBlockIds) {
-			concatenatedIds += contentId;
-		}
-        concatenatedIds += publicKeyBlock.getTimestamp();
-		boolean integrityVerified = DigitalSignature.verifySign(concatenatedIds.getBytes(), publicKeyBlock.getSignature(), pubKey);
+		VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), pubKey);
+        // read blocks covered by pos+size
+        List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
+        byte[] result = "".getBytes(); //Byte stream with all the data from the blocks desired
 
-		if (integrityVerified) {
-			// read blocks covered by pos+size
-			byte[] result = "".getBytes(); //Byte stream with all the data from the blocks desired
+        // take content from blocks to be returned
+        for (String id : contentHashBlockIds) {
+            byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
+            ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(id)));
+            if (!(SHA1.SHAsum(currentBlock.getData()).equals(id)))
+                return "fs_read - Error: integrity not guaranteed".getBytes();
+            System.arraycopy(result, 0, dstByteArray, 0, result.length);
+            System.arraycopy(currentBlock.getData(), 0, dstByteArray, result.length, TAMANHO_BLOCO);
+            result = dstByteArray;
+        }
 
-			// take content from blocks to be returned
-			for (String id : contentHashBlockIds) {
-				byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
-                ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(id)));
-                if (!(SHA1.SHAsum(currentBlock.getData()).equals(id)))
-					return "fs_read - Error: integrity not guaranteed".getBytes();
-				System.arraycopy(result, 0, dstByteArray, 0, result.length);
-				System.arraycopy(currentBlock.getData(), 0, dstByteArray, result.length, TAMANHO_BLOCO);
-				result = dstByteArray;
-			}
-
-			//Put only the content desired in bytesRead
-			System.arraycopy(result, pos % result.length, bytesRead, 0, size);
-		} else {
-			return "fs_read - Error: integrity not guaranteed".getBytes();
-		}
+        //Put only the content desired in bytesRead
+        System.arraycopy(result, pos % result.length, bytesRead, 0, size);
 		return bytesRead;
 	}
 
@@ -243,7 +222,7 @@ public class FS_Library {
 	}
 
     private void initPublicKey() throws CertificateException, FileNotFoundException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, CertPathValidatorException, PteidException, NoSuchProviderException {
-		//this.pub = PTEIDLIB_Cert_Validation.main();
+		//this.pub = PTEIDLIB_Cert_Validation.main(); // to get publicKey from CC
 		generateKeys();
 	}
 
@@ -260,9 +239,8 @@ public class FS_Library {
         Signature dsa = Signature.getInstance("SHA1withRSA");
 		dsa.initSign(this.priv);
 		dsa.update(buffer);
-		byte[] signature = dsa.sign();
-		return signature;
-        //return eIDLib_PKCS11_test.main(buffer);
+		return dsa.sign();
+        //return eIDLib_PKCS11_test.main(buffer); // to sign with CC
 	}
 }
 

@@ -1,5 +1,6 @@
 package test;
 
+import file_system.IntegrityViolationException;
 import file_system.fs_library.FS_Library;
 import org.junit.Test;
 import java.nio.charset.StandardCharsets;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class TestJunit {
 
 	@Test
-	public void writeAndReadAllFile() throws Exception {
+	public void writeAndReadAllFile() throws Exception, IntegrityViolationException {
 		   
 		FS_Library lib = new FS_Library();
 		

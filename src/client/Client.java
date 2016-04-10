@@ -1,5 +1,6 @@
 package client;
 
+import file_system.IntegrityViolationException;
 import file_system.fs_library.FS_Library;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class Client
 {
-	public static void main(String [] args) throws Exception {
+	public static void main(String [] args) throws Exception, IntegrityViolationException {
         FS_Library lib = new FS_Library();
 
 		// init file system: get publicKey from cc
