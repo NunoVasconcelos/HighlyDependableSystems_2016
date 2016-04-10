@@ -4,9 +4,9 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
 
-public class DigitalSignature {
+public final class DigitalSignature {
 
-    public boolean verifySign(byte[] data, byte[] signature, PublicKey public_key) {
+    public static boolean verifySign(byte[] data, byte[] signature, PublicKey public_key) {
         boolean verifies = false;
         X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(public_key.getEncoded());
         try {

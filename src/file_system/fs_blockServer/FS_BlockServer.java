@@ -63,8 +63,8 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		for(String contentId : contentHashBlockIds) {
 			concatenatedIds += contentId;
 		}
-		DigitalSignature ds = new DigitalSignature();
-		boolean integrityVerified = ds.verifySign(concatenatedIds.getBytes(), signature, public_key);
+        concatenatedIds += publicKeyBlock.getTimestamp();
+		boolean integrityVerified = DigitalSignature.verifySign(concatenatedIds.getBytes(), signature, public_key);
         String id = "Error: integrity not guaranteed";
 		if (integrityVerified) {
 			// store publicKeyBlock
@@ -76,24 +76,21 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		return id;
 	}
 
-	// store contentHashBlock
+	// store ContentHashBlock
 	public String put_h(byte[] data) throws NoSuchAlgorithmException {
-        System.out.println("[Method Call] put_h("+ data +")");
-        String id = SHA1.SHAsum(data);
-		ContentHashBlock contentHashBlock = new ContentHashBlock(data);
+        ContentHashBlock contentHashBlock = new ContentHashBlock(data);
+		String id = SHA1.SHAsum(data);
 		blocks.put(id, contentHashBlock);
 		return id;
 	}
 
-    // store publicKey
+    // store Public Key
 	public void storePubKey(RSAPublicKeyImpl publicKey) {
-        System.out.println("[Method Call] storePubKey("+ publicKey +")");
 		publicKeys.add(publicKey);
 	}
 
-    // get all public keys
+    // get all Public Keys
 	public List<PublicKey> readPublicKeys() {
-        System.out.println("[Method Call] readPublicKeys()");
         return publicKeys;
 	}
 }

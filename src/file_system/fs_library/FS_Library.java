@@ -8,15 +8,17 @@ import file_system.fs_blockServer.RmiServerIntf;
 import pteidlib.PteidException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.rmi.Naming;
-import java.rmi.RemoteException;
 import java.security.*;
 import java.security.cert.CertPathValidatorException;
 import java.security.cert.CertificateException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 //import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
@@ -31,8 +33,9 @@ public class FS_Library {
 	private PrivateKey priv;
 	private PublicKey pub;
 	private String id;
-	ArrayList<String> serverPorts = new ArrayList<>(Arrays.asList("1099", "1098", "1097", "1096"));
-	ArrayList<RmiServerIntf> servers = new ArrayList<>();
+	private ArrayList<String> serverPorts = new ArrayList<>(Arrays.asList("1099", "1098", "1097", "1096"));
+	private ArrayList<RmiServerIntf> servers = new ArrayList<>();
+    private static final int MAX_BYZANTINE_FAULTS = 1;
 
 	public void fs_init() throws Exception {
 		RmiServerIntf server;
@@ -53,31 +56,45 @@ public class FS_Library {
 		this.id = SHA1.SHAsum(this.pub.getEncoded());
 	}
 
-    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException {
         Method method;
         Object[] argsArray = args.toArray();
         Class[] classes = new Class[args.size()];
         int i = 0;
-
+        Object response = null;
+        HashMap<Integer, ArrayList<Object>> responses = new HashMap<>();
+        int quorum = (2 * MAX_BYZANTINE_FAULTS) + 1;
         for(Object arg : argsArray) {
             classes[i] = arg.getClass();
             i++;
         }
 
-        Object obj = null;
-
+        // execute request to all block servers
         for(RmiServerIntf server : servers) {
             method = server.getClass().getDeclaredMethod(methodName, classes);
-            obj = method.invoke(server, argsArray);
+            // put response in corresponding bucket
+            response = method.invoke(server, argsArray);
+            if(response != null) {
+                ArrayList<Object> list;
+                if(responses.containsKey(response.hashCode())) {
+                    list = responses.get(response.hashCode());
+                }
+                else list = new ArrayList<>();
+                list.add(response);
+                responses.put(response.hashCode(), list);
+            }
         }
 
-        // TODO: Implement the appropriate replication protocol (from the book)
+        // return response if quorum is verified
+        for(Object key : responses.keySet()) {
+            if(responses.get(key).size() > quorum) return responses.get(key).get(0);
+        }
 
-        return obj;
+        return null;
     }
 
 
-    public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException {
 		PublicKeyBlock publicKeyBlock;
 
         // get publicKeyBlock (which contains content hash block ids)
@@ -93,8 +110,8 @@ public class FS_Library {
             for (String id : contentHashBlockIds) {
                 concatenatedIds += id;
             }
-            DigitalSignature ds = new DigitalSignature();
-            boolean integrityVerified = ds.verifySign(concatenatedIds.getBytes(), publicKeyBlock.getSignature(), this.pub);
+            concatenatedIds += publicKeyBlock.getTimestamp();
+            boolean integrityVerified = DigitalSignature.verifySign(concatenatedIds.getBytes(), publicKeyBlock.getSignature(), this.pub);
             if (!integrityVerified) {
                 System.out.println("fs_write - Error: integrity not guaranteed");
                 return;
@@ -111,7 +128,7 @@ public class FS_Library {
             for (int i = firstBlock; i <= lastBlock; i++) {
                 byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
                 ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(contentHashBlockIds.get(i))));
-                if (!(SHA1.SHAsum(currentBlock.getData()) == contentHashBlockIds.get(i))) {
+                if (!(SHA1.SHAsum(currentBlock.getData()).equals(contentHashBlockIds.get(i)))) {
                     System.out.println("fs_write - Error: integrity not guaranteed");
                     return;
                 }
@@ -153,11 +170,18 @@ public class FS_Library {
 
         //Sign the concatenation of hashesIds
         concatenatedIds = "";
+        LocalDateTime timestamp = LocalDateTime.now();
+        String timeStamp = timestamp.toString();
+
         for (String contentId : newHashBlockIds) {
             concatenatedIds += contentId;
         }
+
+        // add timestamp
+        concatenatedIds += timeStamp;
+
         byte[] signature = signData(concatenatedIds.getBytes());
-        publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature);    //new block updated
+        publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature, timeStamp);    //new block updated
 
         // write updated publicKeyBlock (put_k)
         String hashPub = (String) fileSystemRequest("put_k", new ArrayList<>(Arrays.asList(publicKeyBlock, signature, this.pub)));
@@ -169,7 +193,7 @@ public class FS_Library {
             System.out.println("Error: integrity not guaranteed");
 	}
 
-    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws RemoteException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws IOException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		PublicKeyBlock publicKeyBlock;
 		byte[] bytesRead = new byte[size];
 		PublicKey pubKey;
@@ -188,13 +212,11 @@ public class FS_Library {
 		for (String contentId : contentHashBlockIds) {
 			concatenatedIds += contentId;
 		}
-		DigitalSignature ds = new DigitalSignature();
-		boolean integrityVerified = ds.verifySign(concatenatedIds.getBytes(), publicKeyBlock.getSignature(), pubKey);
+        concatenatedIds += publicKeyBlock.getTimestamp();
+		boolean integrityVerified = DigitalSignature.verifySign(concatenatedIds.getBytes(), publicKeyBlock.getSignature(), pubKey);
 
 		if (integrityVerified) {
 			// read blocks covered by pos+size
-			int firstBlock = pos / TAMANHO_BLOCO;
-			int lastBlock = (pos + size) / TAMANHO_BLOCO;
 			byte[] result = "".getBytes(); //Byte stream with all the data from the blocks desired
 
 			// take content from blocks to be returned
@@ -216,7 +238,7 @@ public class FS_Library {
 		return bytesRead;
 	}
 
-	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, NoSuchAlgorithmException {
 		return (List<PublicKey>) fileSystemRequest("readPublicKeys", new ArrayList<>());
 	}
 
