@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f7142888-17ce-4441-8038-78b503445d8a" name="Default" comment="" />
+    <list default="true" id="f7142888-17ce-4441-8038-78b503445d8a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-2ndDelivery/file_system/PublicKeyBlock.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-2ndDelivery/file_system/PublicKeyBlock.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-2ndDelivery/file_system/VerifyIntegrity.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-2ndDelivery/file_system/VerifyIntegrity.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-2ndDelivery/file_system/fs_blockServer/FS_BlockServer.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-2ndDelivery/file_system/fs_blockServer/FS_BlockServer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-2ndDelivery/file_system/fs_library/FS_Library.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-2ndDelivery/file_system/fs_library/FS_Library.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/PublicKeyBlock.java" afterPath="$PROJECT_DIR$/src/file_system/PublicKeyBlock.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" afterPath="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" />
+    </list>
     <ignored path="sec-2016-2ndDelivery.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -34,99 +43,22 @@
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+              <caret line="47" column="63" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2587#2588#0" expanded="true" />
-                <element signature="e#2619#2620#0" expanded="true" />
-                <element signature="e#2690#2691#0" expanded="true" />
-                <element signature="e#2720#2721#0" expanded="true" />
+                <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+                <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+                <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VerifyIntegrity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/file_system/VerifyIntegrity.java">
+      <file leaf-file-name="RmiServerIntf.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IntegrityViolationException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/file_system/IntegrityViolationException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="60" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;MultiMarkdownPreviewEditor]">
-            <state split_layout="FIRST">
-              <first_editor vertical-scroll-proportion="0.0">
-                <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
-                <folding />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-          <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContentHashBlock.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/file_system/ContentHashBlock.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#408#409#0" expanded="true" />
-                <element signature="e#452#453#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestJunit.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="28" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DigitalSignature.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/file_system/DigitalSignature.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PublicKeyBlock.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+              <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -137,22 +69,27 @@
       <file leaf-file-name="FS_Library.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52019">
-              <caret line="187" column="25" selection-start-line="187" selection-start-column="25" selection-end-line="187" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.48115942">
+              <caret line="92" column="9" selection-start-line="92" selection-start-column="9" selection-end-line="92" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
+                <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
+                <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/Client.java">
+      <file leaf-file-name="PublicKeyBlock.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#setContentHashBlockIds#0;class#PublicKeyBlock#0" expanded="false" />
+                <element signature="method#hashCode#0;class#PublicKeyBlock#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -182,18 +119,18 @@
         <option value="$PROJECT_DIR$/src/file_system/PTEIDLIB_Cert_Validation.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_library/eIDLib_PKCS11_test.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_library/PTEIDLIB_Cert_Validation.java" />
-        <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java" />
         <option value="$PROJECT_DIR$/src/file_system/SHA1.java" />
         <option value="$PROJECT_DIR$/src/file_system/DigitalSignature.java" />
         <option value="$PROJECT_DIR$/src/file_system/Block.java" />
         <option value="$PROJECT_DIR$/src/file_system/ContentHashBlock.java" />
-        <option value="$PROJECT_DIR$/src/file_system/PublicKeyBlock.java" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/file_system/IntegrityViolationException.java" />
-        <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
         <option value="$PROJECT_DIR$/src/client/Client.java" />
         <option value="$PROJECT_DIR$/src/test/TestJunit.java" />
         <option value="$PROJECT_DIR$/src/file_system/VerifyIntegrity.java" />
+        <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java" />
+        <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
+        <option value="$PROJECT_DIR$/src/file_system/PublicKeyBlock.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" />
       </list>
     </option>
@@ -229,9 +166,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -350,6 +285,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -787,24 +724,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestJunit - 2016.04.10 at 15h 11m 35s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.10 at 15h 14m 11s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.10 at 15h 14m 18s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.10 at 15h 20m 54s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.10 at 15h 38m 01s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.10 at 15h 41m 55s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="TestJunit - 2016.04.10 at 16h 40m 44s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
@@ -817,10 +736,28 @@
     <history-entry file="TestJunit - 2016.04.10 at 16h 54m 33s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="TestJunit - 2016.04.13 at 21h 04m 08s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.13 at 21h 04m 51s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.13 at 21h 19m 13s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.13 at 21h 23m 28s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.13 at 21h 31m 57s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.13 at 21h 35m 09s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -829,22 +766,22 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27697262" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17549168" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3993559" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3993559" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -875,18 +812,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java</url>
-          <line>85</line>
-          <properties />
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java</url>
-          <line>195</line>
+          <line>204</line>
           <properties />
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="31" />
+      <option name="time" value="40" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -895,16 +826,38 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/client/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2587#2588#0" expanded="true" />
-            <element signature="e#2619#2620#0" expanded="true" />
-            <element signature="e#2690#2691#0" expanded="true" />
-            <element signature="e#2720#2721#0" expanded="true" />
+            <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -914,7 +867,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -928,6 +881,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;MultiMarkdownPreviewEditor]">
         <state split_layout="FIRST">
           <first_editor vertical-scroll-proportion="0.0">
@@ -936,9 +892,6 @@
           </first_editor>
           <second_editor />
         </state>
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/ContentHashBlock.java">
@@ -958,7 +911,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="28" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -968,7 +921,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -979,6 +932,8 @@
           <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setContentHashBlockIds#0;class#PublicKeyBlock#0" expanded="false" />
+            <element signature="method#hashCode#0;class#PublicKeyBlock#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -989,6 +944,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -998,7 +956,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1017,10 +975,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2587#2588#0" expanded="true" />
-            <element signature="e#2619#2620#0" expanded="true" />
-            <element signature="e#2690#2691#0" expanded="true" />
-            <element signature="e#2720#2721#0" expanded="true" />
+            <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1042,7 +999,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1052,7 +1009,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1063,6 +1020,8 @@
           <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setContentHashBlockIds#0;class#PublicKeyBlock#0" expanded="false" />
+            <element signature="method#hashCode#0;class#PublicKeyBlock#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1073,6 +1032,9 @@
           <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1082,7 +1044,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1101,10 +1063,9 @@
           <caret line="58" column="75" selection-start-line="58" selection-start-column="75" selection-end-line="58" selection-end-column="75" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2587#2588#0" expanded="true" />
-            <element signature="e#2619#2620#0" expanded="true" />
-            <element signature="e#2690#2691#0" expanded="true" />
-            <element signature="e#2720#2721#0" expanded="true" />
+            <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1114,7 +1075,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1134,7 +1095,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1163,6 +1124,8 @@
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#setContentHashBlockIds#0;class#PublicKeyBlock#0" expanded="false" />
+            <element signature="method#hashCode#0;class#PublicKeyBlock#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1181,6 +1144,9 @@
           <caret line="242" column="49" selection-start-line="242" selection-start-column="49" selection-end-line="242" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1262,17 +1228,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68405795">
-          <caret line="17" column="19" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;MultiMarkdownPreviewEditor]">
         <state split_layout="FIRST">
           <first_editor vertical-scroll-proportion="0.0">
@@ -1281,9 +1240,6 @@
           </first_editor>
           <second_editor />
         </state>
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/IntegrityViolationException.java">
@@ -1311,31 +1267,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2587#2588#0" expanded="true" />
-            <element signature="e#2619#2620#0" expanded="true" />
-            <element signature="e#2690#2691#0" expanded="true" />
-            <element signature="e#2720#2721#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1345,7 +1277,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1355,7 +1287,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1365,17 +1297,55 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="28" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
           <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="63" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setContentHashBlockIds#0;class#PublicKeyBlock#0" expanded="false" />
+            <element signature="method#hashCode#0;class#PublicKeyBlock#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52019">
-          <caret line="187" column="25" selection-start-line="187" selection-start-column="25" selection-end-line="187" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.48115942">
+          <caret line="92" column="9" selection-start-line="92" selection-start-column="9" selection-end-line="92" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
           </folding>
         </state>
       </provider>

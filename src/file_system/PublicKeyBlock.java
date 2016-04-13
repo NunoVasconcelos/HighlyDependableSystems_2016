@@ -1,6 +1,7 @@
 package file_system;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.List;
 public class PublicKeyBlock extends Block implements Serializable {
     private List<String> contentHashBlockIds = new ArrayList<>();
     private byte[] signature;
-    private String timestamp;
+    private LocalDateTime timestamp;
+
+    public PublicKeyBlock() { this.timestamp = LocalDateTime.now(); }
 
     public List<String> getContentHashBlockIds()
     {
@@ -17,9 +20,9 @@ public class PublicKeyBlock extends Block implements Serializable {
 
     public byte[] getSignature() { return this.signature; }
 
-    public String getTimestamp() { return timestamp; }
+    public LocalDateTime getTimestamp() { return timestamp; }
 
-    public void setContentHashBlockIds(List<String> contentHashBlockIds, byte[] signature, String timestamp)
+    public void setContentHashBlockIds(List<String> contentHashBlockIds, byte[] signature, LocalDateTime timestamp)
     {
         this.contentHashBlockIds = contentHashBlockIds;
         this.signature = signature;
@@ -29,7 +32,7 @@ public class PublicKeyBlock extends Block implements Serializable {
     @Override
     public int hashCode() {
         int hashCode;
-        if(signature != null && timestamp != null) hashCode = contentHashBlockIds.hashCode() + Arrays.hashCode(signature) + timestamp.hashCode();
+        if(signature != null) hashCode = contentHashBlockIds.hashCode() + Arrays.hashCode(signature);
         else hashCode = contentHashBlockIds.hashCode();
         return hashCode;
     }

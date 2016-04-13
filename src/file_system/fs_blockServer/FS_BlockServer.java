@@ -54,11 +54,12 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	}
 
     public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException, IntegrityViolationException {
-        String id;
+
         // check integrity
 		VerifyIntegrity.verify(publicKeyBlock, signature, public_key);
+
         // store publicKeyBlock
-        id = SHA1.SHAsum(public_key.getEncoded());
+		String id = SHA1.SHAsum(public_key.getEncoded());
         blocks.put(id, publicKeyBlock);
         return id;
 	}

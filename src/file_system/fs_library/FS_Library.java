@@ -58,7 +58,7 @@ public class FS_Library {
         Object[] argsArray = args.toArray();
         Class[] classes = new Class[args.size()];
         int i = 0;
-        Object response = null;
+        Object response;
         HashMap<Integer, ArrayList<Object>> responses = new HashMap<>();
         int quorum = (2 * MAX_BYZANTINE_FAULTS) + 1;
         for(Object arg : argsArray) {
@@ -84,12 +84,27 @@ public class FS_Library {
 
         // return response if quorum is verified
         for(Object key : responses.keySet()) {
-            if(responses.get(key).size() > quorum) return responses.get(key).get(0);
+            if(responses.get(key).size() > quorum) {
+                if(responses.get(key).get(0) instanceof PublicKeyBlock) { // TODO: timestamp just for PublicKeyBlock???
+                    return getHigherTimestamp(responses.get(key));
+                }
+                else return responses.get(key).get(0); // the first one by default
+            }
         }
-
         return null;
     }
 
+    private Object getHigherTimestamp(ArrayList<Object> objects) {
+        PublicKeyBlock higherTimestamp = null;
+        for(Object obj : objects) {
+            if(higherTimestamp == null) higherTimestamp = ((PublicKeyBlock) obj);
+            else {
+                LocalDateTime timeStamp = ((PublicKeyBlock) obj).getTimestamp();
+                if(timeStamp.isAfter(higherTimestamp.getTimestamp())) higherTimestamp = ((PublicKeyBlock) obj);
+            }
+        }
+        return higherTimestamp;
+    }
 
     public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, IntegrityViolationException {
 		PublicKeyBlock publicKeyBlock;
@@ -157,20 +172,14 @@ public class FS_Library {
             }
         }
 
-        //Sign the concatenation of hashesIds
+        //Sign the concatenation of hashesIds + timestamp
         concatenatedIds = "";
         LocalDateTime timestamp = LocalDateTime.now();
         String timeStamp = timestamp.toString();
-
-        for (String contentId : newHashBlockIds) {
-            concatenatedIds += contentId;
-        }
-
-        // add timestamp
+        for (String contentId : newHashBlockIds) concatenatedIds += contentId;
         concatenatedIds += timeStamp;
-
         byte[] signature = signData(concatenatedIds.getBytes());
-        publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature, timeStamp);    //new block updated
+        publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature, timestamp);    //new block updated
 
         // write updated publicKeyBlock (put_k)
         String hashPub = (String) fileSystemRequest("put_k", new ArrayList<>(Arrays.asList(publicKeyBlock, signature, this.pub)));
