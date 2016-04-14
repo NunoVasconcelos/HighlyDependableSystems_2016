@@ -10,6 +10,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -18,6 +19,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	
 	private Hashtable<String, Block> blocks = new Hashtable<>();
 	private List<PublicKey> publicKeys = new ArrayList<>();
+	private LocalDateTime currentTimestamp = LocalDateTime.now();
 
 	public FS_BlockServer() throws RemoteException {
 		super(0);    // required to avoid the 'rmic' step, see below
@@ -46,14 +48,19 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		// if publicKeyBlock do not exist, create
 		if (!blocks.containsKey(id)) {
 			PublicKeyBlock publicKeyBlock = new PublicKeyBlock();
-			this.blocks.put(id, publicKeyBlock);
+			blocks.put(id, publicKeyBlock);
 			return publicKeyBlock;
 		} else {
-			return this.blocks.get(id);
+			return blocks.get(id);
 		}
 	}
 
-    public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException, IntegrityViolationException {
+    public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException, IntegrityViolationException, OldTimestampException {
+
+		// check if timestamp is valid
+		LocalDateTime timestamp = publicKeyBlock.getTimestamp();
+		if(timestamp.isAfter(currentTimestamp)) this.currentTimestamp = timestamp;
+		else throw new OldTimestampException();
 
         // check integrity
 		VerifyIntegrity.verify(publicKeyBlock, signature, public_key);
