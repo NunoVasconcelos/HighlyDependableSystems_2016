@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf {
 	
 	private Hashtable<String, Block> blocks = new Hashtable<>();
@@ -25,7 +27,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		super(0);    // required to avoid the 'rmic' step, see below
 	}
 
-	public static void main(String args[]) throws RemoteException, MalformedURLException {
+	public static void main(String args[]) throws RemoteException, MalformedURLException, InterruptedException {
 		System.out.println("RMI server started");
 
         try { //special exception handler for registry creation
@@ -44,8 +46,9 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		System.out.println("PeerServer bound in registry");
 	}
 
-    public Block get(String id) {
-		// if publicKeyBlock do not exist, create
+    public Block get(String id) throws InterruptedException {
+
+        // if publicKeyBlock do not exist, create
 		if (!blocks.containsKey(id)) {
 			PublicKeyBlock publicKeyBlock = new PublicKeyBlock();
 			blocks.put(id, publicKeyBlock);
@@ -53,11 +56,13 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		} else {
 			return blocks.get(id);
 		}
+
+        // TODO: see r = rid in 4.7, I don't understand
 	}
 
-    public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException, IntegrityViolationException, OldTimestampException {
+    public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException, IntegrityViolationException, OldTimestampException, InterruptedException {
 
-		// check if timestamp is valid
+        // check if timestamp is valid
 		LocalDateTime timestamp = publicKeyBlock.getTimestamp();
 		if(timestamp.isAfter(currentTimestamp)) this.currentTimestamp = timestamp;
 		else throw new OldTimestampException();

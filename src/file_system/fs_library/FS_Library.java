@@ -39,7 +39,7 @@ public class FS_Library {
 
     // public methods
 
-	public void fs_init() throws Exception, IntegrityViolationException {
+	public void fs_init() throws Exception, IntegrityViolationException, QuorumNotVerifiedException {
 		RmiServerIntf server;
 
 		for(String port : this.serverPorts) {
@@ -47,6 +47,8 @@ public class FS_Library {
 			server = (RmiServerIntf) Naming.lookup("//localhost/RmiServer" + port);
 			servers.add(server);
 		}
+
+        System.setProperty("sun.rmi.transport.tcp.responseTimeout", "5000"); // TODO: not wotking...
 
 		// get client Public Key Certificate from the EID Card and register in the Key Server aka Block Server
 		initPublicKey(); // now doing init of privKey as well
@@ -58,7 +60,7 @@ public class FS_Library {
 		this.id = SHA1.SHAsum(this.pub.getEncoded());
     }
 
-    public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, IntegrityViolationException {
+    public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, IntegrityViolationException, QuorumNotVerifiedException {
 
         // get publicKeyBlock (which contains content hash block ids)
         String clientId = SHA1.SHAsum(this.pub.getEncoded());
@@ -115,7 +117,7 @@ public class FS_Library {
 
         //Sign the concatenation of hashesIds + timestamp
         concatenatedIds = "";
-        LocalDateTime timestamp = LocalDateTime.now();
+        LocalDateTime timestamp = LocalDateTime.now(); // TODO: use wts := wts + 1; (4.7) instead of current time???
         String timeStamp = timestamp.toString();
         for (String contentId : newHashBlockIds) concatenatedIds += contentId;
         concatenatedIds += timeStamp;
@@ -130,7 +132,7 @@ public class FS_Library {
         else throw new IntegrityViolationException();
 	}
 
-    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws IOException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IntegrityViolationException {
+    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws IOException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IntegrityViolationException, QuorumNotVerifiedException {
 		PublicKeyBlock publicKeyBlock;
 		byte[] bytesRead = new byte[size];
 
@@ -162,13 +164,13 @@ public class FS_Library {
 		return bytesRead;
 	}
 
-	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, NoSuchAlgorithmException, IntegrityViolationException {
+	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, NoSuchAlgorithmException, IntegrityViolationException, QuorumNotVerifiedException {
 		return (List<PublicKey>) fileSystemRequest("readPublicKeys", new ArrayList<>());
 	}
 
     // private methods
 
-    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException, IntegrityViolationException {
+    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException, IntegrityViolationException, QuorumNotVerifiedException {
         // initializations
         Method method;
         Object[] argsArray = args.toArray();
@@ -186,28 +188,32 @@ public class FS_Library {
         // execute request to all block servers
         for(RmiServerIntf server : servers) {
             method = server.getClass().getDeclaredMethod(methodName, classes);
-            response = method.invoke(server, argsArray);
+            try {
+                response = method.invoke(server, argsArray);
 
-            if(response instanceof PublicKeyBlock) { // TODO: timestamp just for PublicKeyBlock???
-                PublicKeyBlock publicKeyBlock = (PublicKeyBlock) response;
+                if(response instanceof PublicKeyBlock) { // TODO: timestamp just for PublicKeyBlock???
+                    PublicKeyBlock publicKeyBlock = (PublicKeyBlock) response;
 
-                if(publicKeyBlock.getContentHashBlockIds().size() > 0) {
-                    // verify PublicKeyBlock integrity
-                    VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), this.pubKeyRead);
+                    if(publicKeyBlock.getContentHashBlockIds().size() > 0) {
+                        // verify PublicKeyBlock integrity
+                        VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), this.pubKeyRead);
+                    }
+
+                    publicKeyBlocksResponses.add(publicKeyBlock);
+
+                } else {
+                    // put response in corresponding bucket
+                    if (response != null) {
+                        ArrayList<Object> list;
+                        if (responses.containsKey(response.hashCode())) {
+                            list = responses.get(response.hashCode());
+                        } else list = new ArrayList<>();
+                        list.add(response);
+                        responses.put(response.hashCode(), list);
+                    }
                 }
-
-                publicKeyBlocksResponses.add(publicKeyBlock);
-
-            } else {
-                // put response in corresponding bucket
-                if (response != null) {
-                    ArrayList<Object> list;
-                    if (responses.containsKey(response.hashCode())) {
-                        list = responses.get(response.hashCode());
-                    } else list = new ArrayList<>();
-                    list.add(response);
-                    responses.put(response.hashCode(), list);
-                }
+            } catch (java.lang.reflect.InvocationTargetException e) {
+                e.printStackTrace();
             }
         }
 
@@ -219,9 +225,9 @@ public class FS_Library {
                 }
             }
         } else {
-            return getHigherTimestamp(publicKeyBlocksResponses);
+            return getHigherTimestamp(publicKeyBlocksResponses); // TODO: this is correct according to the algorithm???
         }
-        return null;
+        throw new QuorumNotVerifiedException();
     }
 
     private Object getHigherTimestamp(ArrayList<PublicKeyBlock> publicKeyBlocks) {

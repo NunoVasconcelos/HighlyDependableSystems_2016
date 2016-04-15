@@ -14,8 +14,8 @@ import java.util.List;
 
 
 public interface RmiServerIntf extends Remote {
-    Block get(String id) throws RemoteException;
-    String put_k(PublicKeyBlock data, byte[] signature, RSAPublicKeyImpl public_key) throws RemoteException, NoSuchAlgorithmException, IntegrityViolationException, OldTimestampException;
+    Block get(String id) throws RemoteException, InterruptedException;
+    String put_k(PublicKeyBlock data, byte[] signature, RSAPublicKeyImpl public_key) throws RemoteException, NoSuchAlgorithmException, IntegrityViolationException, OldTimestampException, InterruptedException;
     String put_h(byte[] data) throws RemoteException, NoSuchAlgorithmException;
     List<PublicKey> readPublicKeys() throws RemoteException;
     void storePubKey(RSAPublicKeyImpl p) throws RemoteException;

@@ -2,6 +2,7 @@ package test;
 
 import file_system.IntegrityViolationException;
 import file_system.fs_library.FS_Library;
+import file_system.fs_library.QuorumNotVerifiedException;
 import org.junit.Test;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class TestJunit {
 
 	@Test
-	public void writeAndReadAllFile() throws Exception, IntegrityViolationException {
+	public void writeAndReadAllFile() throws Exception, IntegrityViolationException, QuorumNotVerifiedException {
 		   
 		FS_Library lib = new FS_Library();
 		
