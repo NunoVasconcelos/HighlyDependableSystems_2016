@@ -3,7 +3,6 @@ package file_system;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PublicKeyBlock extends Block implements Serializable {
@@ -27,13 +26,5 @@ public class PublicKeyBlock extends Block implements Serializable {
         this.contentHashBlockIds = contentHashBlockIds;
         this.signature = signature;
         this.timestamp = timestamp;
-    }
-
-    @Override
-    public int hashCode() {
-        int hashCode;
-        if(signature != null) hashCode = contentHashBlockIds.hashCode() + Arrays.hashCode(signature);
-        else hashCode = contentHashBlockIds.hashCode();
-        return hashCode;
     }
 }

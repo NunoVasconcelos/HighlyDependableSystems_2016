@@ -33,12 +33,13 @@ public class FS_Library {
 	private ArrayList<String> serverPorts = new ArrayList<>(Arrays.asList("1099", "1098", "1097", "1096"));
 	private ArrayList<RmiServerIntf> servers = new ArrayList<>();
     private static final int MAX_BYZANTINE_FAULTS = 1;
+    private PublicKey pubKeyRead;
 
     // TODO: make config file for servers...
 
     // public methods
 
-	public void fs_init() throws Exception {
+	public void fs_init() throws Exception, IntegrityViolationException {
 		RmiServerIntf server;
 
 		for(String port : this.serverPorts) {
@@ -55,7 +56,7 @@ public class FS_Library {
 
 		// generate client id from publicKey
 		this.id = SHA1.SHAsum(this.pub.getEncoded());
-	}
+    }
 
     public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, IntegrityViolationException {
 
@@ -66,11 +67,6 @@ public class FS_Library {
         // if is not the file initialization, then check integrity
         List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
         String concatenatedIds;
-        if (!contentHashBlockIds.isEmpty()) {
-
-            // verify PublicKeyBlock integrity
-            VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), this.pub);
-        }
 
         // get blocks that are covered by pos+size
         int firstBlock = pos / TAMANHO_BLOCO;
@@ -137,18 +133,14 @@ public class FS_Library {
     public byte[] fs_read(PublicKey publicKey, int pos, int size) throws IOException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IntegrityViolationException {
 		PublicKeyBlock publicKeyBlock;
 		byte[] bytesRead = new byte[size];
-		PublicKey pubKey;
 
 		// check which public key will be used
-		if (publicKey == null) pubKey = this.pub;
-		else pubKey = publicKey;
+		if (publicKey == null) pubKeyRead = this.pub;
+		else pubKeyRead = publicKey;
 
 		// get publicKeyBlock (which contains content hash block ids)
-		String clientId = SHA1.SHAsum(pubKey.getEncoded());
+		String clientId = SHA1.SHAsum(pubKeyRead.getEncoded());
         publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(clientId)));
-
-		// verify PublicKeyBlock integrity
-		VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), pubKey);
 
         // read blocks covered by pos+size
         List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
@@ -170,13 +162,13 @@ public class FS_Library {
 		return bytesRead;
 	}
 
-	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, NoSuchAlgorithmException {
+	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, NoSuchAlgorithmException, IntegrityViolationException {
 		return (List<PublicKey>) fileSystemRequest("readPublicKeys", new ArrayList<>());
 	}
 
     // private methods
 
-    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException {
+    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException, IntegrityViolationException {
         // initializations
         Method method;
         Object[] argsArray = args.toArray();
@@ -189,43 +181,56 @@ public class FS_Library {
             classes[i] = arg.getClass();
             i++;
         }
+        ArrayList<PublicKeyBlock> publicKeyBlocksResponses = new ArrayList<>();
 
         // execute request to all block servers
         for(RmiServerIntf server : servers) {
             method = server.getClass().getDeclaredMethod(methodName, classes);
             response = method.invoke(server, argsArray);
 
-            // put response in corresponding bucket
-            if(response != null) {
-                ArrayList<Object> list;
-                if(responses.containsKey(response.hashCode())) {
-                    list = responses.get(response.hashCode());
+            if(response instanceof PublicKeyBlock) { // TODO: timestamp just for PublicKeyBlock???
+                PublicKeyBlock publicKeyBlock = (PublicKeyBlock) response;
+
+                if(publicKeyBlock.getContentHashBlockIds().size() > 0) {
+                    // verify PublicKeyBlock integrity
+                    VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), this.pubKeyRead);
                 }
-                else list = new ArrayList<>();
-                list.add(response);
-                responses.put(response.hashCode(), list);
+
+                publicKeyBlocksResponses.add(publicKeyBlock);
+
+            } else {
+                // put response in corresponding bucket
+                if (response != null) {
+                    ArrayList<Object> list;
+                    if (responses.containsKey(response.hashCode())) {
+                        list = responses.get(response.hashCode());
+                    } else list = new ArrayList<>();
+                    list.add(response);
+                    responses.put(response.hashCode(), list);
+                }
             }
         }
 
-        // return response with higher timestamp, if quorum is verified
-        for(Object key : responses.keySet()) {
-            if(responses.get(key).size() > quorum) {
-                if(responses.get(key).get(0) instanceof PublicKeyBlock) { // TODO: timestamp just for PublicKeyBlock???
-                    return getHigherTimestamp(responses.get(key));
+        if(responses.size() > 0) {
+            // return response with higher timestamp, if quorum is verified
+            for (Object key : responses.keySet()) {
+                if (responses.get(key).size() > quorum) {
+                    return responses.get(key).get(0); // the first one by default
                 }
-                else return responses.get(key).get(0); // the first one by default
             }
+        } else {
+            return getHigherTimestamp(publicKeyBlocksResponses);
         }
         return null;
     }
 
-    private Object getHigherTimestamp(ArrayList<Object> objects) {
+    private Object getHigherTimestamp(ArrayList<PublicKeyBlock> publicKeyBlocks) {
         PublicKeyBlock higherTimestamp = null;
-        for(Object obj : objects) {
-            if(higherTimestamp == null) higherTimestamp = ((PublicKeyBlock) obj);
+        for(PublicKeyBlock publicKeyBlock : publicKeyBlocks) {
+            if(higherTimestamp == null) higherTimestamp = publicKeyBlock;
             else {
-                LocalDateTime timeStamp = ((PublicKeyBlock) obj).getTimestamp();
-                if(timeStamp.isAfter(higherTimestamp.getTimestamp())) higherTimestamp = ((PublicKeyBlock) obj);
+                LocalDateTime timeStamp = publicKeyBlock.getTimestamp();
+                if(timeStamp.isAfter(higherTimestamp.getTimestamp())) higherTimestamp = publicKeyBlock;
             }
         }
         return higherTimestamp;
