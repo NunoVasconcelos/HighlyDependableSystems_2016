@@ -3,6 +3,7 @@ package file_system.fs_blockServer;
 import file_system.*;
 import sun.security.rsa.RSAPublicKeyImpl;
 
+
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -46,45 +47,66 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		System.out.println("PeerServer bound in registry");
 	}
 
-    public Block get(String id) throws InterruptedException {
+    public ArrayList<Object> get(String id, int RID) throws InterruptedException {
 
-        // if publicKeyBlock do not exist, create
+		Block block;
+
+		ArrayList<Object> response = new ArrayList<Object>();
+		// if publicKeyBlock do not exist, create
 		if (!blocks.containsKey(id)) {
-			PublicKeyBlock publicKeyBlock = new PublicKeyBlock();
-			blocks.put(id, publicKeyBlock);
-			return publicKeyBlock;
-		} else {
-			return blocks.get(id);
+			block = new PublicKeyBlock();
+			blocks.put(id, block);
+		} else {	//If it is any kind of block existent in the hashtable
+			block = blocks.get(id);
 		}
 
-        // TODO: see r = rid in 4.7, I don't understand
+		response.add(block);
+		response.add(RID);
+		return response;
 	}
 
-    public String put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key) throws NoSuchAlgorithmException, IntegrityViolationException, OldTimestampException, InterruptedException {
+    public ArrayList<Object> put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key, int wts) throws NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InterruptedException {
 
-        // check if timestamp is valid
-		LocalDateTime timestamp = publicKeyBlock.getTimestamp();
-		if(timestamp.isAfter(currentTimestamp)) this.currentTimestamp = timestamp;
-		else throw new OldTimestampException();
+		ArrayList<Object> response = new ArrayList<Object>();
+
+		String id = SHA1.SHAsum(public_key.getEncoded());
+
+		// check if timestamp is valid
+		int timestamp = publicKeyBlock.getTimestamp();
 
         // check integrity
 		VerifyIntegrity.verify(publicKeyBlock, signature, public_key);
 
         // store publicKeyBlock
-		String id = SHA1.SHAsum(public_key.getEncoded());
-        blocks.put(id, publicKeyBlock);
-        return id;
+		//RID is not relevant, we just get the old block to check the timestamps
+		PublicKeyBlock oldPublicKeyBlock = (PublicKeyBlock) get(id,0).get(0);
+
+		if(timestamp > oldPublicKeyBlock.getTimestamp())  blocks.put(id, publicKeyBlock);
+		else throw new DifferentTimestampException();
+
+		response.add(id);
+		response.add(wts);
+
+		return response;
 	}
 
 	// store ContentHashBlock
-	public String put_h(byte[] data) throws NoSuchAlgorithmException {
-        ContentHashBlock contentHashBlock = new ContentHashBlock(data);
+	public ArrayList<Object> put_h(byte[] data, int wts) throws NoSuchAlgorithmException {
+
+		ArrayList<Object> response = new ArrayList<Object>();
+
+		ContentHashBlock contentHashBlock = new ContentHashBlock(data);
+		contentHashBlock.setTimestamp(wts);
 		String id = SHA1.SHAsum(data);
 		blocks.put(id, contentHashBlock);
-		return id;
+
+		response.add(id);
+		response.add(wts);
+		return response;
 	}
 
     // store Public Key
+	//TODO ask teacher if it is necessary to check the publicKey integrity
 	public void storePubKey(RSAPublicKeyImpl publicKey) {
 		publicKeys.add(publicKey);
 	}
