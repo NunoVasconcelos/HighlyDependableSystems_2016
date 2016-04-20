@@ -1,5 +1,6 @@
 package client;
 
+import file_system.DifferentTimestampException;
 import file_system.IntegrityViolationException;
 import file_system.fs_library.FS_Library;
 import file_system.fs_library.QuorumNotVerifiedException;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class Client
 {
-	public static void main(String [] args) throws Exception, IntegrityViolationException, QuorumNotVerifiedException {
+	public static void main(String [] args) throws Exception, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
 		FS_Library lib = new FS_Library();
 
 		// init file system: get publicKey from cc

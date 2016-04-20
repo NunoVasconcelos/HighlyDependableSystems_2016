@@ -9,7 +9,7 @@ public final class VerifyIntegrity {
         List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
         String concatenatedIds = "";
         for(String contentId : contentHashBlockIds) concatenatedIds += contentId;
-        concatenatedIds += publicKeyBlock.getTimestamp();
+
         if(!DigitalSignature.verifySign(concatenatedIds.getBytes(), signature, publicKey))
             throw new IntegrityViolationException();
     }

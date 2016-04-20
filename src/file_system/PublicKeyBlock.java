@@ -17,11 +17,10 @@ public class PublicKeyBlock extends Block implements Serializable {
 
     public byte[] getSignature() { return this.signature; }
 
-    public void setContentHashBlockIds(List<String> contentHashBlockIds, byte[] signature, int timestamp)
+    public void setContentHashBlockIds(List<String> contentHashBlockIds, byte[] signature)
     {
         this.contentHashBlockIds = contentHashBlockIds;
         this.signature = signature;
-        this.timestamp = timestamp;
     }
 
     @Override

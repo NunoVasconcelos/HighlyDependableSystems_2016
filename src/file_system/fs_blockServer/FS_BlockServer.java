@@ -2,6 +2,7 @@ package file_system.fs_blockServer;
 
 import file_system.*;
 import sun.security.rsa.RSAPublicKeyImpl;
+import sun.security.util.ObjectIdentifier;
 
 
 import java.net.MalformedURLException;
@@ -11,7 +12,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -22,7 +22,6 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	
 	private Hashtable<String, Block> blocks = new Hashtable<>();
 	private List<PublicKey> publicKeys = new ArrayList<>();
-	private LocalDateTime currentTimestamp = LocalDateTime.now();
 
 	public FS_BlockServer() throws RemoteException {
 		super(0);    // required to avoid the 'rmic' step, see below
@@ -47,6 +46,27 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		System.out.println("PeerServer bound in registry");
 	}
 
+	public Object serverRequest(String functionName, ArrayList<Object> args) throws InterruptedException, NoSuchAlgorithmException, DifferentTimestampException, IntegrityViolationException {
+
+		Object obj = new Object();
+
+		//TODO receiving the MACs and checking them
+
+		if (functionName.equals("get"))		//get(String id, int RID)
+			return get((String) args.get(0), (int) args.get(1));
+		else if (functionName.equals("put_k"))	//put_k(PublicKeyBlock publicKey, Signature, int wts)
+			return put_k((PublicKeyBlock) args.get(0), (RSAPublicKeyImpl) args.get(1),(int) args.get(2));
+		else if (functionName.equals("put_h"))	//put_h(byte[] data, int wts)
+			return put_h((byte[]) args.get(0), (int) args.get(1));
+		else if (functionName.equals("storePubKey"))	//storePubKey(RSAPublickey publicKey, int wts)
+			return storePubKey((RSAPublicKeyImpl) args.get(0), (int) args.get(1));
+		else if (functionName.equals("readPublicKeys"))	//readPublicKeys(int RID)
+			return readPublicKeys((int) args.get(0));
+
+		return obj;
+	}
+
+
     public ArrayList<Object> get(String id, int RID) throws InterruptedException {
 
 		Block block;
@@ -65,7 +85,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		return response;
 	}
 
-    public ArrayList<Object> put_k(PublicKeyBlock publicKeyBlock, byte[] signature, RSAPublicKeyImpl public_key, int wts) throws NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InterruptedException {
+    public ArrayList<Object> put_k(PublicKeyBlock publicKeyBlock, RSAPublicKeyImpl public_key, int wts) throws NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InterruptedException {
 
 		ArrayList<Object> response = new ArrayList<Object>();
 
@@ -75,7 +95,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		int timestamp = publicKeyBlock.getTimestamp();
 
         // check integrity
-		VerifyIntegrity.verify(publicKeyBlock, signature, public_key);
+		VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), public_key);
 
         // store publicKeyBlock
 		//RID is not relevant, we just get the old block to check the timestamps
@@ -106,13 +126,25 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	}
 
     // store Public Key
-	//TODO ask teacher if it is necessary to check the publicKey integrity
-	public void storePubKey(RSAPublicKeyImpl publicKey) {
+	public ArrayList<Object> storePubKey(RSAPublicKeyImpl publicKey, int wts) throws NoSuchAlgorithmException {
+		ArrayList<Object> response = new ArrayList<>();
+		String hash = SHA1.SHAsum(publicKey.getEncoded());
+
 		publicKeys.add(publicKey);
+
+		//Return must be <id, wts>, so that we check integrity and assure freshness with wts
+		response.add(hash);
+		response.add(wts);
+		return response;
 	}
 
     // get all Public Keys
-	public List<PublicKey> readPublicKeys() {
-        return publicKeys;
+	public ArrayList<Object> readPublicKeys(int RID) {
+        ArrayList<Object> response = new ArrayList<>();
+
+		response.add(publicKeys);
+		response.add(RID);
+
+		return response;
 	}
 }

@@ -1,5 +1,6 @@
 package test;
 
+import file_system.DifferentTimestampException;
 import file_system.IntegrityViolationException;
 import file_system.fs_library.FS_Library;
 import file_system.fs_library.QuorumNotVerifiedException;
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class TestJunit {
 
 	@Test
-	public void writeAndReadAllFile() throws Exception, IntegrityViolationException, QuorumNotVerifiedException {
+	public void writeAndReadAllFile() throws Exception, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
 		   
 		FS_Library lib = new FS_Library();
 		

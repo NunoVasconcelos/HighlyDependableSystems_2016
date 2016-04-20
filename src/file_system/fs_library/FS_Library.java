@@ -6,6 +6,7 @@ import pteidlib.PteidException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.rmi.Naming;
@@ -55,11 +56,12 @@ public class FS_Library {
 		// get client Public Key Certificate from the EID Card and register in the Key Server aka Block Server
 		initPublicKey(); // now doing init of privKey as well
 
+
+        // generate client id from publicKey
+        this.id = SHA1.SHAsum(this.pub.getEncoded());
+
 		// store publicKey on Key Server (Block Server)
         fileSystemRequest("storePubKey", new ArrayList<>(Arrays.asList(this.pub)));
-
-		// generate client id from publicKey
-		this.id = SHA1.SHAsum(this.pub.getEncoded());
     }
 
     public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
@@ -120,17 +122,16 @@ public class FS_Library {
 
         //Sign the concatenation of hashesIds + timestamp
         concatenatedIds = "";
-        String timeStamp = new Integer(timestamp).toString();
-
         for (String contentId : newHashBlockIds) concatenatedIds += contentId;
-        concatenatedIds += timeStamp;
         byte[] signature = signData(concatenatedIds.getBytes());
-        publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature, timestamp);    //new block updated
+
+        //new block updated
+        publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature);
 
         // write updated publicKeyBlock (put_k)
-        String hashPub = (String) fileSystemRequest("put_k", new ArrayList<>(Arrays.asList(publicKeyBlock, signature, this.pub)));
+        String hashPub = (String) fileSystemRequest("put_k", new ArrayList<>(Arrays.asList(publicKeyBlock, this.pub)));
 
-        // verify ContentHashBlock integrity
+        // verify
         if (id.equals(hashPub)) System.out.println("File stored successfully!");
         else throw new IntegrityViolationException();
 	}
@@ -176,11 +177,11 @@ public class FS_Library {
 
     private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException {
 
-        if(methodName.equals("get")) {
+        if(methodName.equals("get") || methodName.equals("readPublicKeys")) {
             RID++;
             args.add(RID);
         }
-        if(methodName.equals("put_k") || methodName.equals("put_h"))
+        if(methodName.equals("put_k") || methodName.equals("put_h") || methodName.equals("storePubKey"))
         {
             timestamp++;
             args.add(timestamp);
@@ -188,21 +189,29 @@ public class FS_Library {
 
         // initializations
         Method method;
-        Object[] argsArray = args.toArray();
-        Class[] classes = new Class[args.size()];
-        int i = 0;
+
+        //Add the method name to the argsArray so that the serverRequest function knows the function to be called
+        ArrayList<Object> argsArray = new ArrayList<Object>();
+        argsArray.add(methodName);
+        argsArray.add(args);
+        Object[] arrayOfArgs = argsArray.toArray();
+
+
+        //To get an array with (String, ArrayList<Object>) to call the requestServer function from the server
+        Class[] classes = new Class[2];
+        classes[0] = "".getClass();
+        classes[1] = args.getClass();
+
         Object response;
         HashMap<Integer, ArrayList<Object>> responses = new HashMap<>();
         int quorum = (2 * MAX_BYZANTINE_FAULTS) + 1;
-        for(Object arg : argsArray) {
-            classes[i] = arg.getClass();
-            i++;
-        }
+
 
         // execute request to all block servers
         for(RmiServerIntf server : servers) {
-            method = server.getClass().getDeclaredMethod(methodName, classes);
-            response = method.invoke(server, argsArray);
+            method = server.getClass().getDeclaredMethod("serverRequest", classes);
+
+            response = method.invoke(server, arrayOfArgs);
 
             // put response in corresponding bucket
             if(response != null) {
@@ -231,7 +240,7 @@ public class FS_Library {
                     else    //if the timestamp is correct, return the String id, either from the put_k or put_h
                         return ((ArrayList<Object>) responses.get(key).get(0)).get(0);
                 }
-                else if (methodName.equals("get"))
+                else if (methodName.equals("get") || methodName.equals("readPublicKeys"))
                 {
                     //ArrayList<Object> returns pairs <id, rid> from the get function. Since we have a bucket full of
                     //those with the same timestamp, we just need to grab one of them, and compare the timestamp
@@ -239,6 +248,21 @@ public class FS_Library {
                         throw new DifferentTimestampException();
                     else    //if the timestamp is correct, return the publicKeyBlock
                         return ((ArrayList<Object>) responses.get(key).get(0)).get(0);
+                }
+                else if(methodName.equals("storePubKey"))
+                {
+                    //Check if the server stored the correct Public Key, in case the server is byzantine
+                    //Response object came in ArrayList with <String id, int wts>
+                    String checkId = (String) ((ArrayList<Object>) responses.get(key).get(0)).get(0);
+                    int checkWts = (int) ((ArrayList<Object>) responses.get(key).get(0)).get(1);
+
+                    if (!this.id.equals(checkId))
+                        throw new IntegrityViolationException();
+                    if (timestamp != checkWts)
+                        throw new DifferentTimestampException();
+                    else
+                        return checkId; //Not used in anything, but this function needs to return something. storePubKey was void.
+
                 }
             }
         }
