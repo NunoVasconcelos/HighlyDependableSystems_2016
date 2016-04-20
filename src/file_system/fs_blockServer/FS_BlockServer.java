@@ -46,7 +46,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		System.out.println("PeerServer bound in registry");
 	}
 
-	public Object serverRequest(String functionName, ArrayList<Object> args) throws InterruptedException, NoSuchAlgorithmException, DifferentTimestampException, IntegrityViolationException {
+	public Object serverRequest(byte[] digest, String functionName, ArrayList<Object> args) throws InterruptedException, NoSuchAlgorithmException, DifferentTimestampException, IntegrityViolationException {
 
 		Object obj = new Object();
 
@@ -67,7 +67,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	}
 
 
-    public ArrayList<Object> get(String id, int RID) throws InterruptedException {
+    private ArrayList<Object> get(String id, int RID) throws InterruptedException {
 
 		Block block;
 
@@ -85,7 +85,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		return response;
 	}
 
-    public ArrayList<Object> put_k(PublicKeyBlock publicKeyBlock, RSAPublicKeyImpl public_key, int wts) throws NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InterruptedException {
+	private ArrayList<Object> put_k(PublicKeyBlock publicKeyBlock, RSAPublicKeyImpl public_key, int wts) throws NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InterruptedException {
 
 		ArrayList<Object> response = new ArrayList<Object>();
 
@@ -109,7 +109,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	}
 
 	// store ContentHashBlock
-	public ArrayList<Object> put_h(byte[] data, int wts) throws NoSuchAlgorithmException {
+	private ArrayList<Object> put_h(byte[] data, int wts) throws NoSuchAlgorithmException {
 
 		ArrayList<Object> response = new ArrayList<Object>();
 
@@ -124,7 +124,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	}
 
     // store Public Key
-	public ArrayList<Object> storePubKey(RSAPublicKeyImpl publicKey, int wts) throws NoSuchAlgorithmException {
+	private ArrayList<Object> storePubKey(RSAPublicKeyImpl publicKey, int wts) throws NoSuchAlgorithmException {
 		ArrayList<Object> response = new ArrayList<>();
 		String hash = SHA1.SHAsum(publicKey.getEncoded());
 
@@ -137,7 +137,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	}
 
     // get all Public Keys
-	public ArrayList<Object> readPublicKeys(int RID) {
+	private ArrayList<Object> readPublicKeys(int RID) {
         ArrayList<Object> response = new ArrayList<>();
 
 		response.add(publicKeys);

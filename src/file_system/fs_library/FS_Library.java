@@ -4,21 +4,30 @@ import file_system.*;
 import file_system.fs_blockServer.RmiServerIntf;
 import pteidlib.PteidException;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.Naming;
 import java.security.*;
 import java.security.cert.CertPathValidatorException;
 import java.security.cert.CertificateException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 //import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
 //import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
 //import sun.security.pkcs11.wrapper.CK_MECHANISM;
@@ -31,34 +40,44 @@ public class FS_Library {
 	private PrivateKey priv;
 	private PublicKey pub;
 	private String id;
-	private ArrayList<String> serverPorts = new ArrayList<>(Arrays.asList("1099", "1098", "1097", "1096"));
+	private ArrayList<String> serverPorts = new ArrayList<>();
 	private ArrayList<RmiServerIntf> servers = new ArrayList<>();
     private static final int MAX_BYZANTINE_FAULTS = 1;
     private PublicKey pubKeyRead;
     private int RID = 0;
     private int timestamp = 0;
+    private SecretKey secretkey;
 
     // TODO: make config file for servers...
 
     // public methods
 
 	public void fs_init() throws Exception, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
-		RmiServerIntf server;
+		// read config file
+        Path path = Paths.get("config.txt");
+        List<String> configLines = Files.readAllLines(path);
+        for(String line : configLines) serverPorts.add(line);
 
+        // get remote objects (servers)
+        RmiServerIntf server;
 		for(String port : this.serverPorts) {
-			// create RMI connection with block server
+			// create RMI connection with each block server
 			server = (RmiServerIntf) Naming.lookup("//localhost/RmiServer" + port);
 			servers.add(server);
 		}
 
-        System.setProperty("sun.rmi.transport.tcp.responseTimeout", "5000"); // TODO: not wotking...
+        System.setProperty("sun.rmi.transport.tcp.responseTimeout", "5000"); // TODO: probably not wotking, test
 
 		// get client Public Key Certificate from the EID Card and register in the Key Server aka Block Server
 		initPublicKey(); // now doing init of privKey as well
 
-
         // generate client id from publicKey
         this.id = SHA1.SHAsum(this.pub.getEncoded());
+
+        // get a key generator for the HMAC-MD5 keyed-hashing algorithm
+        KeyGenerator keyGen = KeyGenerator.getInstance("HmacMD5");
+        // generate MAC secret key
+        this.secretkey = keyGen.generateKey();
 
 		// store publicKey on Key Server (Block Server)
         fileSystemRequest("storePubKey", new ArrayList<>(Arrays.asList(this.pub)));
@@ -70,6 +89,10 @@ public class FS_Library {
         String clientId = SHA1.SHAsum(this.pub.getEncoded());
 
         PublicKeyBlock publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(clientId)));
+
+        if(!publicKeyBlock.getContentHashBlockIds().isEmpty())
+            // check integrity
+            VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), this.pub);
 
         // if is not the file initialization, then check integrity
         List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
@@ -136,7 +159,7 @@ public class FS_Library {
         else throw new IntegrityViolationException();
 	}
 
-    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws IOException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
+    public byte[] fs_read(PublicKey publicKey, int pos, int size) throws IOException, NoSuchAlgorithmException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException, InvalidKeyException {
 		PublicKeyBlock publicKeyBlock;
 		byte[] bytesRead = new byte[size];
 
@@ -147,6 +170,9 @@ public class FS_Library {
 		// get publicKeyBlock (which contains content hash block ids)
 		String clientId = SHA1.SHAsum(pubKeyRead.getEncoded());
         publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(clientId)));
+
+        // check integrity
+        VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), pubKeyRead);
 
         // read blocks covered by pos+size
         List<String> contentHashBlockIds = publicKeyBlock.getContentHashBlockIds();
@@ -168,14 +194,22 @@ public class FS_Library {
 		return bytesRead;
 	}
 
-	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, NoSuchAlgorithmException, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
+	public List<PublicKey> fs_list() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, NoSuchAlgorithmException, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException, InvalidKeyException {
 		return (List<PublicKey>) fileSystemRequest("readPublicKeys", new ArrayList<>());
 	}
 
     // private methods
 
+    private static byte[] serialize(Object obj) throws IOException {
+        try(ByteArrayOutputStream b = new ByteArrayOutputStream()){
+            try(ObjectOutputStream o = new ObjectOutputStream(b)){
+                o.writeObject(obj);
+            }
+            return b.toByteArray();
+        }
+    }
 
-    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException {
+    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InvalidKeyException {
 
         if(methodName.equals("get") || methodName.equals("readPublicKeys")) {
             RID++;
@@ -191,16 +225,26 @@ public class FS_Library {
         Method method;
 
         //Add the method name to the argsArray so that the serverRequest function knows the function to be called
-        ArrayList<Object> argsArray = new ArrayList<Object>();
+        ArrayList<Object> argsArray = new ArrayList<>();
+
+        byte[] a = methodName.getBytes();
+        byte[] b = serialize(args);
+        byte[] c = new byte[a.length + b.length];
+        System.arraycopy(a, 0, c, 0, a.length);
+        System.arraycopy(b, 0, c, a.length, b.length);
+
+        byte[] macDigest = generateMAC(c);
+        argsArray.add(macDigest);
         argsArray.add(methodName);
         argsArray.add(args);
         Object[] arrayOfArgs = argsArray.toArray();
 
 
         //To get an array with (String, ArrayList<Object>) to call the requestServer function from the server
-        Class[] classes = new Class[2];
-        classes[0] = "".getClass();
-        classes[1] = args.getClass();
+        Class[] classes = new Class[3];
+        classes[0] = macDigest.getClass();
+        classes[1] = "".getClass();
+        classes[2] = args.getClass();
 
         Object response;
         HashMap<Integer, ArrayList<Object>> responses = new HashMap<>();
@@ -273,6 +317,17 @@ public class FS_Library {
 		//this.pub = PTEIDLIB_Cert_Validation.main(); // to get publicKey from CC
 		generateKeys();
 	}
+
+    public byte[] generateMAC(byte[] data) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+
+        // create a MAC and initialize with the above key
+        Mac mac = Mac.getInstance(this.secretkey.getAlgorithm());
+        mac.init(this.secretkey);
+
+        // create a digest from the byte array
+        byte[] digest = mac.doFinal(data);
+        return digest;
+    }
 
 	private void generateKeys() throws NoSuchProviderException, NoSuchAlgorithmException {
 		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
