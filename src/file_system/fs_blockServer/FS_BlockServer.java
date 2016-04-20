@@ -90,9 +90,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		ArrayList<Object> response = new ArrayList<Object>();
 
 		String id = SHA1.SHAsum(public_key.getEncoded());
-
-		// check if timestamp is valid
-		int timestamp = publicKeyBlock.getTimestamp();
+		publicKeyBlock.setTimestamp(wts);
 
         // check integrity
 		VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), public_key);
@@ -101,7 +99,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		//RID is not relevant, we just get the old block to check the timestamps
 		PublicKeyBlock oldPublicKeyBlock = (PublicKeyBlock) get(id,0).get(0);
 
-		if(timestamp > oldPublicKeyBlock.getTimestamp())  blocks.put(id, publicKeyBlock);
+		if(wts > oldPublicKeyBlock.getTimestamp())  blocks.put(id, publicKeyBlock);
 		else throw new DifferentTimestampException();
 
 		response.add(id);

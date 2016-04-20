@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1f739e6-ad66-4770-9f43-c23e929f3504" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/OldTimestampException.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/client/Client.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/client/Client.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/Block.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/Block.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/ContentHashBlock.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/ContentHashBlock.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/PublicKeyBlock.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/PublicKeyBlock.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/VerifyIntegrity.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/VerifyIntegrity.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/FS_BlockServer.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/FS_BlockServer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/RmiServerIntf.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/RmiServerIntf.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_library/FS_Library.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_library/FS_Library.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/test/TestJunit.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/test/TestJunit.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/Client.java" afterPath="$PROJECT_DIR$/src/client/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/PublicKeyBlock.java" afterPath="$PROJECT_DIR$/src/file_system/PublicKeyBlock.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/VerifyIntegrity.java" afterPath="$PROJECT_DIR$/src/file_system/VerifyIntegrity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" afterPath="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/TestJunit.java" afterPath="$PROJECT_DIR$/src/test/TestJunit.java" />
     </list>
     <ignored path="sec-2016-p2.iws" />
@@ -41,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="FS_BlockServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FS_BlockServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45400944">
-              <caret line="104" column="53" selection-start-line="104" selection-start-column="53" selection-end-line="104" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3389#3397#0" expanded="true" />
@@ -54,11 +40,41 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="PublicKeyBlock.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.37906137">
+              <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Block.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/file_system/Block.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VerifyIntegrity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/file_system/VerifyIntegrity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="TestJunit.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -68,7 +84,7 @@
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="213" column="47" selection-start-line="213" selection-start-column="47" selection-end-line="213" selection-end-column="47" />
+              <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#8863#8871#0" expanded="true" />
@@ -118,10 +134,10 @@
         <option value="$PROJECT_DIR$/src/file_system/ResponseObject.java" />
         <option value="$PROJECT_DIR$/src/file_system/PublicKeyBlock.java" />
         <option value="$PROJECT_DIR$/src/file_system/VerifyIntegrity.java" />
-        <option value="$PROJECT_DIR$/src/test/TestJunit.java" />
-        <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" />
+        <option value="$PROJECT_DIR$/src/test/TestJunit.java" />
+        <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
       </list>
     </option>
   </component>
@@ -662,18 +678,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestJunit - 2016.04.20 at 14h 58m 12s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.20 at 15h 07m 50s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.20 at 15h 08m 54s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.20 at 15h 10m 05s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="TestJunit - 2016.04.20 at 15h 12m 02s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
@@ -690,6 +694,18 @@
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestJunit - 2016.04.20 at 15h 58m 08s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.20 at 16h 10m 21s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.20 at 16h 10m 54s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.20 at 16h 11m 01s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.20 at 17h 07m 57s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -713,16 +729,16 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39007893" sideWeight="0.50428724" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3387978" sideWeight="0.49571276" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33821872" sideWeight="0.49571276" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17760417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18274383" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38360655" sideWeight="0.49571276" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3957159" sideWeight="0.49571276" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -745,31 +761,25 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/TestJunit.java</url>
-          <line>26</line>
-          <properties />
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java</url>
-          <line>211</line>
-          <properties />
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java</url>
-          <line>242</line>
-          <properties />
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java</url>
           <line>50</line>
           <properties />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/TestJunit.java</url>
+          <line>39</line>
+          <properties />
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/TestJunit.java</url>
+          <line>36</line>
+          <properties />
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="30" />
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1083,14 +1093,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/Block.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1103,22 +1105,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15456675">
           <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/VerifyIntegrity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3786575">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3786575">
-          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -1147,9 +1133,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/VerifyIntegrity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51983297">
+        <state vertical-scroll-proportion="0.5573441">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
@@ -1158,7 +1152,7 @@
     <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1166,7 +1160,7 @@
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="213" column="47" selection-start-line="213" selection-start-column="47" selection-end-line="213" selection-end-column="47" />
+          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#8863#8871#0" expanded="true" />
@@ -1174,14 +1168,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/Block.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45400944">
-          <caret line="104" column="53" selection-start-line="104" selection-start-column="53" selection-end-line="104" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3389#3397#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37906137">
+          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

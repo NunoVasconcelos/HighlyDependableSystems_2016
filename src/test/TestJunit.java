@@ -38,7 +38,7 @@ public class TestJunit {
 		
 		// read content from stored file on block server
 		byte[] bytesReturned = lib.fs_read(null, pos, (size+1));
-		
+
 		assertEquals(new String(content, StandardCharsets.UTF_8), new String(bytesReturned, StandardCharsets.UTF_8));
 	}
 	
