@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1f739e6-ad66-4770-9f43-c23e929f3504" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/Block.java" afterPath="$PROJECT_DIR$/src/file_system/Block.java" />
     </list>
     <ignored path="sec-2016-p2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="FS_BlockServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FS_BlockServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.75883067">
-              <caret line="146" column="5" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
+            <state vertical-scroll-proportion="-13.794118">
+              <caret line="143" column="26" selection-start-line="143" selection-start-column="26" selection-end-line="143" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -36,18 +36,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FS_Library.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
+      <file leaf-file-name="PublicKeyBlock.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="327" column="42" selection-start-line="327" selection-start-column="42" selection-end-line="327" selection-end-column="42" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#fs_init#0;class#FS_Library#0" expanded="false" />
-                <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
-                <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
-                <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
-              </folding>
+              <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Block.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/file_system/Block.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="92" selection-start-line="7" selection-start-column="92" selection-end-line="7" selection-end-column="92" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -58,6 +62,22 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FS_Library.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.025730994">
+              <caret line="281" column="24" selection-start-line="281" selection-start-column="24" selection-end-line="281" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#fs_init#0;class#FS_Library#0" expanded="false" />
+                <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
+                <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
+                <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,7 +105,6 @@
         <option value="$PROJECT_DIR$/src/file_system/fs_library/ResponsePair.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_library/ResponseObject.java" />
         <option value="$PROJECT_DIR$/src/file_system/ContentHashBlock.java" />
-        <option value="$PROJECT_DIR$/src/file_system/Block.java" />
         <option value="$PROJECT_DIR$/src/file_system/OldTimestampException.java" />
         <option value="$PROJECT_DIR$/src/file_system/DiferentTimestampException.java" />
         <option value="$PROJECT_DIR$/src/file_system/DifferentTimestampException.java" />
@@ -99,6 +118,7 @@
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java" />
         <option value="$PROJECT_DIR$/src/test/TestJunit.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
+        <option value="$PROJECT_DIR$/src/file_system/Block.java" />
       </list>
     </option>
   </component>
@@ -703,7 +723,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1005,13 +1025,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/Block.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/inputFile.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1037,13 +1050,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -1127,26 +1133,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
+    <entry file="file://$PROJECT_DIR$/src/file_system/PublicKeyBlock.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="327" column="42" selection-start-line="327" selection-start-column="42" selection-end-line="327" selection-end-column="42" />
+          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.794118">
+          <caret line="143" column="26" selection-start-line="143" selection-start-column="26" selection-end-line="143" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/Block.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="92" selection-start-line="7" selection-start-column="92" selection-end-line="7" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.025730994">
+          <caret line="281" column="24" selection-start-line="281" selection-start-column="24" selection-end-line="281" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#fs_init#0;class#FS_Library#0" expanded="false" />
             <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
             <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
             <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75883067">
-          <caret line="146" column="5" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
