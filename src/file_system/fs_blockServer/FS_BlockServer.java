@@ -146,3 +146,9 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		return response;
 	}
 }
+
+
+//TODO tipos de ataques: forjar(MACs e assinaturas), crashar servidores(sleep), replay attacks(mandar um pacote antigo),
+
+//Caso em que uma réplica devolve um pacote antigo(o servidor estava lento), outra réplica com a assinatura correta e antigo(o servidor era byzantino)
+//e o que desempata era o terceiro servidor do quorum que devolve tudo correto
