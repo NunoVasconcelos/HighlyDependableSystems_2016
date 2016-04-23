@@ -209,7 +209,7 @@ public class FS_Library {
         }
     }
 
-    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InvalidKeyException {
+    private Object fileSystemRequest(String methodName, ArrayList<Object> args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InvalidKeyException, QuorumNotVerifiedException {
 
         if(methodName.equals("get") || methodName.equals("readPublicKeys")) {
             RID++;
@@ -310,7 +310,7 @@ public class FS_Library {
                 }
             }
         }
-        return null;
+        throw new QuorumNotVerifiedException();
     }
 
     private void initPublicKey() throws CertificateException, FileNotFoundException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, CertPathValidatorException, PteidException, NoSuchProviderException {
