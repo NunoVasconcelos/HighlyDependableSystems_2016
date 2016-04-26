@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1f739e6-ad66-4770-9f43-c23e929f3504" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerTrash.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/Block.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/Block.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/FS_BlockServer.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/FS_BlockServer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/RmiServerIntf.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/RmiServerIntf.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_library/FS_Library.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_library/FS_Library.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_library/eIDLib_PKCS11_test.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_library/eIDLib_PKCS11_test.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/test/TestJunit.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/test/TestJunit.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" afterPath="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/TestJunit.java" afterPath="$PROJECT_DIR$/src/test/TestJunit.java" />
     </list>
     <ignored path="sec-2016-p2.iws" />
@@ -37,8 +28,8 @@
       <file leaf-file-name="FS_BlockServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="153" column="4" selection-start-line="153" selection-start-column="4" selection-end-line="155" selection-end-column="5" />
+            <state relative-caret-position="229">
+              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,7 +40,7 @@
       <file leaf-file-name="FS_Library.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-153">
+            <state relative-caret-position="1156">
               <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -64,7 +55,7 @@
       <file leaf-file-name="FS_BlockServerTrash.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerTrash.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
+            <state relative-caret-position="646">
               <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -98,8 +89,18 @@
       <file leaf-file-name="TestJunit.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="599">
-              <caret line="147" column="20" selection-start-line="147" selection-start-column="20" selection-end-line="147" selection-end-column="20" />
+            <state relative-caret-position="556">
+              <caret line="88" column="30" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReflectiveCallable.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -681,37 +682,45 @@
       <option name="presentableId" value="Default" />
       <updated>1460763649737</updated>
     </task>
+    <task id="LOCAL-00001" summary="added some tests. create more for: slow, old and forged">
+      <created>1461451851803</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1461451851803</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestJunit - 2016.04.23 at 22h 47m 08s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 32m 24s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 22h 53m 43s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 32m 25s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 23h 03m 09s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 33m 42s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 23h 10m 17s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 35m 16s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 23h 13m 41s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 36m 59s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 23h 13m 51s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 39m 54s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 23h 15m 20s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 40m 13s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 23h 21m 19s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 40m 29s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 23h 21m 44s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 42m 49s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.23 at 23h 48m 44s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 19h 43m 15s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -740,7 +749,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18176973" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18123667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -765,6 +774,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added some tests. create more for: slow, old and forged" />
+    <option name="LAST_COMMIT_MESSAGE" value="added some tests. create more for: slow, old and forged" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -774,14 +787,14 @@
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/test/TestJunit.java</url>
-          <line>92</line>
-          <properties />
-          <option name="timeStamp" value="37" />
+          <line>21</line>
+          <properties field="ports" class="test.TestJunit" />
+          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="39" />
+      <option name="time" value="46" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -953,7 +966,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1034,13 +1046,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/runners/ParentRunner.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1073,7 +1078,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1102,7 +1106,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1110,18 +1113,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/BlockServerThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="52" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/BlockServerThread.java" />
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/QuorumNotVerifiedException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1140,7 +1135,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-153">
+        <state relative-caret-position="1156">
           <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1151,19 +1146,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="153" column="4" selection-start-line="153" selection-start-column="4" selection-end-line="155" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerTrash.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
+        <state relative-caret-position="646">
           <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1173,10 +1158,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="147" column="20" selection-start-line="147" selection-start-column="20" selection-end-line="147" selection-end-column="20" />
+        <state relative-caret-position="556">
+          <caret line="88" column="30" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="30" />
           <folding />
         </state>
       </provider>
