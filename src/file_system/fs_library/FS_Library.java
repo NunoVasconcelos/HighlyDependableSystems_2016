@@ -23,10 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 //import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
 //import sun.security.pkcs11.wrapper.CK_C_INITIALIZE_ARGS;
@@ -52,11 +49,13 @@ public class FS_Library {
 
     // public methods
 
-	public void fs_init() throws Exception, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
+	public void fs_init(ArrayList<String> ports) throws Exception, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
 		// read config file
-        Path path = Paths.get("config.txt");
-        List<String> configLines = Files.readAllLines(path);
-        for(String line : configLines) serverPorts.add(line);
+//        Path path = Paths.get("config.txt");
+//        List<String> configLines = Files.readAllLines(path);
+//        for(String line : configLines) serverPorts.add(line);
+        serverPorts = ports;
+
 
         // get remote objects (servers)
         RmiServerIntf server;

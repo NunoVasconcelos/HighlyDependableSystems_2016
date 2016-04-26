@@ -3,10 +3,8 @@ package test;
 import file_system.DifferentTimestampException;
 import file_system.IntegrityViolationException;
 import file_system.fs_blockServer.FS_BlockServer;
-import file_system.fs_blockServer.FS_BlockServerTrash;
 import file_system.fs_library.FS_Library;
 import file_system.fs_library.QuorumNotVerifiedException;
-import junit.framework.TestCase;
 import org.junit.Test;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -16,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TestJunit {
 
@@ -25,11 +24,11 @@ public class TestJunit {
         }
     };
 
-    private void writeAndReadAllFile() throws IntegrityViolationException, QuorumNotVerifiedException, Exception, DifferentTimestampException {
+    private void writeAndReadAllFile(ArrayList<String> ports) throws IntegrityViolationException, QuorumNotVerifiedException, Exception, DifferentTimestampException {
         FS_Library lib = new FS_Library();
 
         // init file system: get publicKey from cc
-        lib.fs_init();
+        lib.fs_init(ports);
 
         // get publicKeys from all users
         //List<PublicKey> publicKeys = lib.fs_list();
@@ -59,85 +58,69 @@ public class TestJunit {
 
 	@Test
 	public void all4ServersUpAndWell() throws Exception, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
+        ArrayList<String> ports = new ArrayList<>();
 
         FS_BlockServer server1 = new FS_BlockServer();
-        server1.main(new String[]{getPort()});
+        ports.add(getPort());
+        server1.main(new String[]{ports.get(0)});
 
         FS_BlockServer server2 = new FS_BlockServer();
-        server2.main(new String[]{getPort()});
+        ports.add(getPort());
+        server2.main(new String[]{ports.get(1)});
 
         FS_BlockServer server3 = new FS_BlockServer();
-        server3.main(new String[]{getPort()});
+        ports.add(getPort());
+        server3.main(new String[]{ports.get(2)});
 
         FS_BlockServer server4 = new FS_BlockServer();
-        server4.main(new String[]{getPort()});
+        ports.add(getPort());
+        server4.main(new String[]{ports.get(3)});
 
-        writeAndReadAllFile();
+        writeAndReadAllFile(ports);
 	}
 	
 	@Test
 	public void OneServerDown() throws Exception, QuorumNotVerifiedException, DifferentTimestampException, IntegrityViolationException {
+        ArrayList<String> ports = new ArrayList<>();
+
         FS_BlockServer server1 = new FS_BlockServer();
-        server1.main(new String[]{getPort()});
+        ports.add(getPort());
+        server1.main(new String[]{ports.get(0)});
 
         FS_BlockServer server2 = new FS_BlockServer();
-        server2.main(new String[]{getPort()});
+        ports.add(getPort());
+        server2.main(new String[]{ports.get(1)});
 
         FS_BlockServer server3 = new FS_BlockServer();
-        server3.main(new String[]{getPort()});
+        ports.add(getPort());
+        server3.main(new String[]{ports.get(2)});
 
-        writeAndReadAllFile();
+        writeAndReadAllFile(ports);
 	}
 
     @Test(expected=QuorumNotVerifiedException.class)
     public void TwoServersDown() throws Exception, QuorumNotVerifiedException, DifferentTimestampException, IntegrityViolationException {
+        ArrayList<String> ports = new ArrayList<>();
+
         FS_BlockServer server1 = new FS_BlockServer();
-        server1.main(new String[]{getPort()});
+        ports.add(getPort());
+        server1.main(new String[]{ports.get(0)});
 
         FS_BlockServer server2 = new FS_BlockServer();
-        server2.main(new String[]{getPort()});
+        ports.add(getPort());
+        server2.main(new String[]{ports.get(1)});
 
-        writeAndReadAllFile();
+        writeAndReadAllFile(ports);
 
     }
 
     @Test
     public void OneByzantineTrash() throws Exception, QuorumNotVerifiedException, DifferentTimestampException, IntegrityViolationException {
-        FS_BlockServer server1 = new FS_BlockServer();
-        server1.main(new String[]{getPort()});
-
-        FS_BlockServer server2 = new FS_BlockServer();
-        server2.main(new String[]{getPort()});
-
-        FS_BlockServer server3 = new FS_BlockServer();
-        server3.main(new String[]{getPort()});
-
-        // byzantine
-        FS_BlockServerTrash server4 = new FS_BlockServerTrash();
-        server4.main(new String[]{getPort()});
-
-        writeAndReadAllFile();
-
+        fail();
     }
 
     @Test(expected=QuorumNotVerifiedException.class)
     public void TwoByzantineTrash() throws Exception, QuorumNotVerifiedException, DifferentTimestampException, IntegrityViolationException {
-        FS_BlockServer server1 = new FS_BlockServer();
-        server1.main(new String[]{getPort()});
-
-        FS_BlockServer server2 = new FS_BlockServer();
-        server2.main(new String[]{getPort()});
-
-
-        // byzantine
-        FS_BlockServerTrash server3 = new FS_BlockServerTrash();
-        server3.main(new String[]{getPort()});
-
-        FS_BlockServerTrash server4 = new FS_BlockServerTrash();
-        server4.main(new String[]{getPort()});
-
-        writeAndReadAllFile();
-
     }
    
 }

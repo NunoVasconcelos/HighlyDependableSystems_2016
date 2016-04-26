@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1f739e6-ad66-4770-9f43-c23e929f3504" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerTrash.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/client/Client.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/client/Client.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/FS_BlockServer.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/FS_BlockServer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_library/FS_Library.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_library/FS_Library.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/test/TestJunit.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/test/TestJunit.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/Client.java" afterPath="$PROJECT_DIR$/src/client/Client.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" afterPath="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/TestJunit.java" afterPath="$PROJECT_DIR$/src/test/TestJunit.java" />
     </list>
     <ignored path="sec-2016-p2.iws" />
@@ -28,10 +36,16 @@
       <file leaf-file-name="FS_BlockServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state relative-caret-position="151">
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+                <element signature="method#get#0;class#FS_BlockServer#0" expanded="false" />
+                <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+                <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
+                <element signature="method#storePubKey#0;class#FS_BlockServer#0" expanded="false" />
+                <element signature="method#readPublicKeys#0;class#FS_BlockServer#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -40,10 +54,14 @@
       <file leaf-file-name="FS_Library.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1156">
-              <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
+            <state relative-caret-position="135">
+              <caret line="272" column="0" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#fs_write#0;class#FS_Library#0" expanded="false" />
+                <element signature="method#fs_read#0;class#FS_Library#0" expanded="false" />
+                <element signature="method#fs_list#0;class#FS_Library#0" expanded="false" />
+                <element signature="method#serialize#0;class#FS_Library#0" expanded="false" />
                 <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
                 <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
                 <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
@@ -52,16 +70,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FS_BlockServerTrash.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerTrash.java">
+      <file leaf-file-name="RmiServerIntf.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1606#1607#0" expanded="true" />
-                <element signature="e#1641#1642#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="102">
+              <caret line="14" column="4" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -79,9 +93,11 @@
       <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
-              <folding />
+            <state relative-caret-position="170">
+              <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -89,8 +105,8 @@
       <file leaf-file-name="TestJunit.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="556">
-              <caret line="88" column="30" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="30" />
+            <state relative-caret-position="202">
+              <caret line="118" column="15" selection-start-line="118" selection-start-column="15" selection-end-line="118" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -135,7 +151,6 @@
         <option value="$PROJECT_DIR$/src/file_system/ResponseObject.java" />
         <option value="$PROJECT_DIR$/src/file_system/PublicKeyBlock.java" />
         <option value="$PROJECT_DIR$/src/file_system/VerifyIntegrity.java" />
-        <option value="$PROJECT_DIR$/src/client/Client.java" />
         <option value="$PROJECT_DIR$/config.txt" />
         <option value="$PROJECT_DIR$/src/file_system/MAC.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java" />
@@ -143,6 +158,7 @@
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/RunnableDemo.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/BlockServerThread.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" />
+        <option value="$PROJECT_DIR$/src/client/Client.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerTrash.java" />
         <option value="$PROJECT_DIR$/src/test/TestJunit.java" />
@@ -152,8 +168,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1066" />
+    <option name="width" value="1382" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -181,7 +197,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -296,7 +312,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -689,38 +705,45 @@
       <option name="project" value="LOCAL" />
       <updated>1461451851803</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="tests: servers now instantiated properly. create more tests for: slow, old and forged">
+      <created>1461696514344</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1461696514344</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestJunit - 2016.04.26 at 19h 32m 24s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 26m 45s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 32m 25s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 26m 57s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 33m 42s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 27m 19s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 35m 16s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 28m 45s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 36m 59s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 34m 10s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 39m 54s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 34m 42s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 40m 13s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 41m 46s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 40m 29s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 41m 49s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 42m 49s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 41m 56s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestJunit - 2016.04.26 at 19h 43m 15s.xml">
+    <history-entry file="TestJunit - 2016.04.26 at 20h 42m 14s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -734,33 +757,33 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39007893" sideWeight="0.50428724" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1982851" sideWeight="0.49571276" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2979066" sideWeight="0.49571276" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18123667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25718608" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3954984" sideWeight="0.49571276" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33977455" sideWeight="0.49571276" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290461" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -776,25 +799,32 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added some tests. create more for: slow, old and forged" />
-    <option name="LAST_COMMIT_MESSAGE" value="added some tests. create more for: slow, old and forged" />
+    <MESSAGE value="tests: servers now instantiated properly. create more tests for: slow, old and forged" />
+    <option name="LAST_COMMIT_MESSAGE" value="tests: servers now instantiated properly. create more tests for: slow, old and forged" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java</url>
-          <line>55</line>
+          <line>52</line>
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/src/test/TestJunit.java</url>
-          <line>21</line>
-          <properties field="ports" class="test.TestJunit" />
-          <option name="timeStamp" value="45" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java</url>
+          <line>272</line>
+          <properties />
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java</url>
+          <line>55</line>
+          <properties />
+          <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="46" />
+      <option name="time" value="49" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -844,6 +874,12 @@
           <caret line="63" column="24" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#get#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#storePubKey#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#readPublicKeys#0;class#FS_BlockServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -882,6 +918,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#fs_write#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#fs_read#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#fs_list#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#serialize#0;class#FS_Library#0" expanded="false" />
             <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
             <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
             <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
@@ -909,6 +949,12 @@
           <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#get#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#storePubKey#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#readPublicKeys#0;class#FS_BlockServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -975,6 +1021,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#fs_write#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#fs_read#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#fs_list#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#serialize#0;class#FS_Library#0" expanded="false" />
             <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
             <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
             <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
@@ -1067,13 +1117,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="14" column="215" selection-start-line="14" selection-start-column="215" selection-end-line="14" selection-end-column="215" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/VerifyIntegrity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1125,20 +1168,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+        <state relative-caret-position="170">
+          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/RmiServerIntf.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="14" column="4" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#main#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#get#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_k#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#put_h#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#storePubKey#0;class#FS_BlockServer#0" expanded="false" />
+            <element signature="method#readPublicKeys#0;class#FS_BlockServer#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1156">
-          <caret line="68" column="8" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
+        <state relative-caret-position="135">
+          <caret line="272" column="0" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#fs_write#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#fs_read#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#fs_list#0;class#FS_Library#0" expanded="false" />
+            <element signature="method#serialize#0;class#FS_Library#0" expanded="false" />
             <element signature="method#initPublicKey#0;class#FS_Library#0" expanded="false" />
             <element signature="method#generateKeys#0;class#FS_Library#0" expanded="false" />
             <element signature="method#signData#0;class#FS_Library#0" expanded="false" />
@@ -1148,38 +1229,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerTrash.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1606#1607#0" expanded="true" />
-            <element signature="e#1641#1642#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        <state relative-caret-position="212">
+          <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="88" column="30" selection-start-line="88" selection-start-column="30" selection-end-line="88" selection-end-column="30" />
+        <state relative-caret-position="202">
+          <caret line="118" column="15" selection-start-line="118" selection-start-column="15" selection-end-line="118" selection-end-column="15" />
           <folding />
         </state>
       </provider>

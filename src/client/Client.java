@@ -19,7 +19,7 @@ public class Client
 		FS_Library lib = new FS_Library();
 
 		// init file system: get publicKey from cc
-		lib.fs_init();
+		//lib.fs_init(ports);
 
 		// get publicKeys from all users
 		List<PublicKey> publicKeys = lib.fs_list();

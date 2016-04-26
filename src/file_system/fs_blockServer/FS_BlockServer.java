@@ -71,7 +71,6 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		return obj;
 	}
 
-
     private ArrayList<Object> get(String id, int RID) throws InterruptedException {
 
 		Block block;
@@ -150,10 +149,6 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 
 		return response;
 	}
-
-    public void stop() {
-        // TODO: must stop rmi server
-    }
 }
 
 
