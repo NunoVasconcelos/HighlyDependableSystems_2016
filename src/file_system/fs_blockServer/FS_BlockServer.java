@@ -50,10 +50,10 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
             //do nothing, error means registry already exists
             System.out.println("java RMI registry already exists on port " + args[0]);
         }
-		
+
 		//Generate the secret key to create the MACs
 		byte[] encoded = "group14SEC2016".getBytes();
-		sharedSecret = new SecretKeySpec(encoded, "AES");
+		sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 
 		//Instantiate RmiServer
 		FS_BlockServer obj = new FS_BlockServer();

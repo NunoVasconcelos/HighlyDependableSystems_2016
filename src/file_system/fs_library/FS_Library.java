@@ -337,7 +337,7 @@ public class FS_Library {
         //Generating a seed to create the secret key
         byte[] encoded = "group14SEC2016".getBytes();
         // generate MAC secret key
-        this.sharedSecret = new SecretKeySpec(encoded, "AES");
+        this.sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 	}
 
 	private byte[] signData(byte[] buffer) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
