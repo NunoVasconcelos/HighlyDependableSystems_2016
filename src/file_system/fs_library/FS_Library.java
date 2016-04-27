@@ -7,6 +7,7 @@ import pteidlib.PteidException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -43,7 +44,7 @@ public class FS_Library {
     private PublicKey pubKeyRead;
     private int RID = 0;
     private int timestamp = 0;
-    private SecretKey secretkey;
+    private SecretKey sharedSecret;
 
     // TODO: make config file for servers...
 
@@ -73,10 +74,6 @@ public class FS_Library {
         // generate client id from publicKey
         this.id = SHA1.SHAsum(this.pub.getEncoded());
 
-        // get a key generator for the HMAC-MD5 keyed-hashing algorithm
-        KeyGenerator keyGen = KeyGenerator.getInstance("HmacMD5");
-        // generate MAC secret key
-        this.secretkey = keyGen.generateKey();
 
 		// store publicKey on Key Server (Block Server)
         fileSystemRequest("storePubKey", new ArrayList<>(Arrays.asList(this.pub)));
@@ -317,11 +314,11 @@ public class FS_Library {
 		generateKeys();
 	}
 
-    public byte[] generateMAC(byte[] data) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+    private byte[] generateMAC(byte[] data) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
 
         // create a MAC and initialize with the above key
-        Mac mac = Mac.getInstance(this.secretkey.getAlgorithm());
-        mac.init(this.secretkey);
+        Mac mac = Mac.getInstance(this.sharedSecret.getAlgorithm());
+        mac.init(this.sharedSecret);
 
         // create a digest from the byte array
         byte[] digest = mac.doFinal(data);
@@ -336,6 +333,11 @@ public class FS_Library {
 		this.priv = pair.getPrivate();
 		this.pub = pair.getPublic();
         this.pubKeyRead = this.pub;
+
+        //Generating a seed to create the secret key
+        byte[] encoded = "group14SEC2016".getBytes();
+        // generate MAC secret key
+        this.sharedSecret = new SecretKeySpec(encoded, "AES");
 	}
 
 	private byte[] signData(byte[] buffer) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {

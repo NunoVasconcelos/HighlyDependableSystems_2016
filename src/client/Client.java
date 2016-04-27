@@ -11,15 +11,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Client
 {
+	private static List<String> ports = new ArrayList<String>(){
+		{
+			for(int i = 1101; i >= 900; i--) add(i + "");
+		}
+	};
+
 	public static void main(String [] args) throws Exception, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
 		FS_Library lib = new FS_Library();
 
 		// init file system: get publicKey from cc
-		//lib.fs_init(ports);
+
+
+//		lib.fs_init(ports);
 
 		// get publicKeys from all users
 		List<PublicKey> publicKeys = lib.fs_list();
@@ -43,4 +52,6 @@ public class Client
 		outputStream.close();
 
 	}
+
+
 }
