@@ -21,6 +21,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 
 		byte[] confirmedDigest = generateMAC(c);
 
-		if(digest != confirmedDigest) {
+		if(!Arrays.equals(digest, confirmedDigest)) {
 			System.out.println("Message integrity not verified!");
 			throw new IntegrityViolationException();
 		}
