@@ -120,7 +120,8 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		ArrayList<Object> response = new ArrayList<Object>();
 
 		String id = SHA1.SHAsum(public_key.getEncoded());
-		publicKeyBlock.setTimestamp(wts);
+
+
 
         // check integrity
 		VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), public_key);
@@ -144,7 +145,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		ArrayList<Object> response = new ArrayList<Object>();
 
 		ContentHashBlock contentHashBlock = new ContentHashBlock(data);
-		contentHashBlock.setTimestamp(wts);
+		
 		String id = SHA1.SHAsum(data);
 		blocks.put(id, contentHashBlock);
 

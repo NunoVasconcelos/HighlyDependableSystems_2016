@@ -147,6 +147,10 @@ public class FS_Library {
         //new block updated
         publicKeyBlock.setContentHashBlockIds(newHashBlockIds, signature);
 
+        //Increment the publicKeyBlock timestamp
+        publicKeyBlock.incrementTS();
+
+
         // write updated publicKeyBlock (put_k)
         String hashPub = (String) fileSystemRequest("put_k", new ArrayList<>(Arrays.asList(publicKeyBlock, this.pub)));
 
@@ -339,6 +343,18 @@ public class FS_Library {
         // generate MAC secret key
         this.sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 	}
+
+    private Object getHigherTimestamp(ArrayList<PublicKeyBlock> publicKeyBlocks) {
+        PublicKeyBlock higherTimestamp = null;
+        for(PublicKeyBlock publicKeyBlock : publicKeyBlocks) {
+            if(higherTimestamp == null) higherTimestamp = publicKeyBlock;
+            else {
+                int timeStamp = publicKeyBlock.getTimestamp();
+                if(timeStamp > higherTimestamp.getTimestamp()) higherTimestamp = publicKeyBlock;
+            }
+        }
+        return higherTimestamp;
+    }
 
 	private byte[] signData(byte[] buffer) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature dsa = Signature.getInstance("SHA1withRSA");
