@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1f739e6-ad66-4770-9f43-c23e929f3504" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/FS_BlockServerByzantineSleep.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/file_system/fs_blockServer/FS_BlockServerByzantineSleep.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/sec-2016-p2/test/TestJunit.class" afterPath="$PROJECT_DIR$/out/production/sec-2016-p2/test/TestJunit.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineMAC.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineMAC.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineReplay.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineReplay.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineSleep.java" afterPath="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineSleep.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/TestJunit.java" afterPath="$PROJECT_DIR$/src/test/TestJunit.java" />
     </list>
     <ignored path="sec-2016-p2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -96,7 +93,7 @@
       <file leaf-file-name="FS_BlockServerByzantineMAC.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineMAC.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
+            <state relative-caret-position="-2353">
               <caret line="56" column="73" selection-start-line="56" selection-start-column="73" selection-end-line="56" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -105,10 +102,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FS_BlockServerByzantineSleep.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FS_BlockServerByzantineSleep.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineSleep.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
+            <state relative-caret-position="-1121">
               <caret line="58" column="77" selection-start-line="58" selection-start-column="77" selection-end-line="58" selection-end-column="77" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -117,11 +114,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestJunit.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TestJunit.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="169" column="0" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
+            <state relative-caret-position="183">
+              <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -168,10 +165,10 @@
         <option value="$PROJECT_DIR$/src/file_system/Block.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServer.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_library/FS_Library.java" />
-        <option value="$PROJECT_DIR$/src/test/TestJunit.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineMAC.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineReplay.java" />
         <option value="$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineSleep.java" />
+        <option value="$PROJECT_DIR$/src/test/TestJunit.java" />
       </list>
     </option>
   </component>
@@ -829,19 +826,19 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestJunit - 2016.04.29 at 22h 26m 29s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.29 at 22h 28m 51s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestJunit - 2016.04.29 at 22h 29m 27s.xml">
-      <configuration name="TestJunit" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="TestJunit - 2016.04.29 at 22h 29m 41s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestJunit - 2016.04.29 at 23h 20m 21s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.29 at 23h 26m 22s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.29 at 23h 45m 09s.xml">
+      <configuration name="TestJunit" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestJunit - 2016.04.29 at 23h 46m 41s.xml">
       <configuration name="TestJunit" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestJunit_OneServerWrongMac - 2016.04.29 at 22h 26m 35s.xml">
@@ -1285,16 +1282,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineMAC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="56" column="73" selection-start-line="56" selection-start-column="73" selection-end-line="56" selection-end-column="73" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineReplay.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="485">
@@ -1305,10 +1292,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineSleep.java">
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineMAC.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="58" column="77" selection-start-line="58" selection-start-column="77" selection-end-line="58" selection-end-column="77" />
+        <state relative-caret-position="-2353">
+          <caret line="56" column="73" selection-start-line="56" selection-start-column="73" selection-end-line="56" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1317,8 +1304,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/TestJunit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="169" column="0" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
+        <state relative-caret-position="183">
+          <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/file_system/fs_blockServer/FS_BlockServerByzantineSleep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1121">
+          <caret line="58" column="77" selection-start-line="58" selection-start-column="77" selection-end-line="58" selection-end-column="77" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
