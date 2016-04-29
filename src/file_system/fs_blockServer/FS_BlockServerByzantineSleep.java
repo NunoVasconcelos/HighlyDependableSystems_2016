@@ -56,7 +56,7 @@ public class FS_BlockServerByzantineSleep extends UnicastRemoteObject implements
         sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 
         //Instantiate RmiServer
-        FS_BlockServer obj = new FS_BlockServer();
+        FS_BlockServerByzantineSleep obj = new FS_BlockServerByzantineSleep();
 
         // Bind this object instance to the name "RmiServer"
         connString = "//localhost/RmiServer" + args[0];
@@ -108,7 +108,7 @@ public class FS_BlockServerByzantineSleep extends UnicastRemoteObject implements
         ///////////////////////////////////////////////////////
         ///////////////////  Byzantine Code   /////////////////
 
-        Thread.sleep(60000);
+        Thread.sleep(6000);
 
         ///////////////////  Byzantine Code   /////////////////
         ///////////////////////////////////////////////////////

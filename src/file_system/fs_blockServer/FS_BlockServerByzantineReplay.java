@@ -57,7 +57,7 @@ public class FS_BlockServerByzantineReplay extends UnicastRemoteObject implement
         sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 
         //Instantiate RmiServer
-        FS_BlockServer obj = new FS_BlockServer();
+        FS_BlockServerByzantineReplay obj = new FS_BlockServerByzantineReplay();
 
         // Bind this object instance to the name "RmiServer"
         connString = "//localhost/RmiServer" + args[0];

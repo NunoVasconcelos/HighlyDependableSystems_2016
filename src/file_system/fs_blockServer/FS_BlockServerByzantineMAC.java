@@ -54,7 +54,7 @@ public class FS_BlockServerByzantineMAC extends UnicastRemoteObject implements R
         sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 
         //Instantiate RmiServer
-        FS_BlockServer obj = new FS_BlockServer();
+        FS_BlockServerByzantineMAC obj = new FS_BlockServerByzantineMAC();
 
         // Bind this object instance to the name "RmiServer"
         connString = "//localhost/RmiServer" + args[0];
