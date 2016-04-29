@@ -3,6 +3,7 @@ package test;
 import file_system.DifferentTimestampException;
 import file_system.IntegrityViolationException;
 import file_system.fs_blockServer.FS_BlockServer;
+import file_system.fs_blockServer.FS_BlockServerByzantineMAC;
 import file_system.fs_library.FS_Library;
 import file_system.fs_library.QuorumNotVerifiedException;
 import org.junit.Test;
@@ -121,6 +122,52 @@ public class TestJunit {
 
     @Test(expected=QuorumNotVerifiedException.class)
     public void TwoByzantineTrash() throws Exception, QuorumNotVerifiedException, DifferentTimestampException, IntegrityViolationException {
+    }
+
+    @Test
+    public void OneServerWrongMac() throws Exception, QuorumNotVerifiedException, DifferentTimestampException, IntegrityViolationException {
+        ArrayList<String> ports = new ArrayList<>();
+
+        FS_BlockServerByzantineMAC server1 = new FS_BlockServerByzantineMAC();
+        ports.add(getPort());
+        server1.main(new String[]{ports.get(0)});
+
+        FS_BlockServer server2 = new FS_BlockServer();
+        ports.add(getPort());
+        server2.main(new String[]{ports.get(1)});
+
+        FS_BlockServer server3 = new FS_BlockServer();
+        ports.add(getPort());
+        server3.main(new String[]{ports.get(2)});
+
+        FS_BlockServer server4 = new FS_BlockServer();
+        ports.add(getPort());
+        server4.main(new String[]{ports.get(3)});
+
+        writeAndReadAllFile(ports);
+    }
+
+    @Test
+    public void TwoServersWrongMac() throws Exception, QuorumNotVerifiedException, DifferentTimestampException, IntegrityViolationException {
+        ArrayList<String> ports = new ArrayList<>();
+
+        FS_BlockServerByzantineMAC server1 = new FS_BlockServerByzantineMAC();
+        ports.add(getPort());
+        server1.main(new String[]{ports.get(0)});
+
+        FS_BlockServerByzantineMAC server2 = new FS_BlockServerByzantineMAC();
+        ports.add(getPort());
+        server2.main(new String[]{ports.get(1)});
+
+        FS_BlockServer server3 = new FS_BlockServer();
+        ports.add(getPort());
+        server3.main(new String[]{ports.get(2)});
+
+        FS_BlockServer server4 = new FS_BlockServer();
+        ports.add(getPort());
+        server4.main(new String[]{ports.get(3)});
+
+        writeAndReadAllFile(ports);
     }
    
 }
