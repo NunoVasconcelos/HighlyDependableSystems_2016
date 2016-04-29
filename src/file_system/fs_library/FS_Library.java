@@ -11,6 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -257,6 +258,10 @@ public class FS_Library {
 
             response = method.invoke(server, arrayOfArgs);
 
+
+            System.out.println(response.hashCode());
+
+
             // put response in corresponding bucket
             if(response != null) {
                 ArrayList<Object> list;
@@ -273,32 +278,46 @@ public class FS_Library {
         for(Object key : responses.keySet()) {
             if(responses.get(key).size() >= quorum) {
 
+                ArrayList<Object> responseArray = (ArrayList<Object>) (responses.get(key).get(0));
+
+                //Verify MAC
+                byte[] receivedDigest = serialize(responseArray.get(0));    //Get the MAC from the arrayList
+                responseArray.remove(0);    //Remove it so we can serialize the whole message without the MAC
+
+
+                byte[] bytesFromMessage = serialize(responseArray); //Get the bytes from the whole message
+                byte[] digest = generateMAC(bytesFromMessage);  //generate the MAC so we can compare
+
+                if(!Arrays.equals(digest, receivedDigest)) {
+                    System.out.println("Message integrity not verified!");
+                    throw new IntegrityViolationException();
+                }
 
                 //Verify the timestamp received from the servers, either from the put functions or the get function
                 if(methodName.equals("put_h") || methodName.equals("put_k"))
                 {
                     //ArrayList<Object> returns pairs <id, wts> from the put_k or put_h. Since we have a bucket full of
                     //those with the same timestamp, we just need to grab one of them, and compare the timestamp
-                    if (timestamp != (int) ((ArrayList<Object>) responses.get(key).get(0)).get(1))
+                    if (timestamp != (int) responseArray.get(1))
                         throw new DifferentTimestampException();
                     else    //if the timestamp is correct, return the String id, either from the put_k or put_h
-                        return ((ArrayList<Object>) responses.get(key).get(0)).get(0);
+                        return responseArray.get(0);
                 }
                 else if (methodName.equals("get") || methodName.equals("readPublicKeys"))
                 {
                     //ArrayList<Object> returns pairs <id, rid> from the get function. Since we have a bucket full of
                     //those with the same timestamp, we just need to grab one of them, and compare the timestamp
-                    if (RID != (int) ((ArrayList<Object>) responses.get(key).get(0)).get(1))
+                    if (RID != (int) responseArray.get(1))
                         throw new DifferentTimestampException();
                     else    //if the timestamp is correct, return the publicKeyBlock
-                        return ((ArrayList<Object>) responses.get(key).get(0)).get(0);
+                        return responseArray.get(0);
                 }
                 else if(methodName.equals("storePubKey"))
                 {
                     //Check if the server stored the correct Public Key, in case the server is byzantine
                     //Response object came in ArrayList with <String id, int wts>
-                    String checkId = (String) ((ArrayList<Object>) responses.get(key).get(0)).get(0);
-                    int checkWts = (int) ((ArrayList<Object>) responses.get(key).get(0)).get(1);
+                    String checkId = (String) responseArray.get(0);
+                    int checkWts = (int) responseArray.get(1);
 
                     if (!this.id.equals(checkId))
                         throw new IntegrityViolationException();

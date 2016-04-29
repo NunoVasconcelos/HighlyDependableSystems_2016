@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -67,7 +68,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 
 	public Object serverRequest(byte[] digest, String functionName, ArrayList<Object> args) throws InterruptedException, NoSuchAlgorithmException, DifferentTimestampException, IntegrityViolationException, IOException, InvalidKeyException {
 
-		Object obj = new Object();
+		ArrayList<Object> response = new ArrayList<>();
 
 		//Generating the MAC to check with the received MAC
 		byte[] a = functionName.getBytes();
@@ -84,17 +85,22 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		}
 
 		if (functionName.equals("get"))		//get(String id, int RID)
-			return get((String) args.get(0), (int) args.get(1));
+			response = get((String) args.get(0), (int) args.get(1));
 		else if (functionName.equals("put_k"))	//put_k(PublicKeyBlock publicKey, Signature, int wts)
-			return put_k((PublicKeyBlock) args.get(0), (RSAPublicKeyImpl) args.get(1),(int) args.get(2));
+			response = put_k((PublicKeyBlock) args.get(0), (RSAPublicKeyImpl) args.get(1),(int) args.get(2));
 		else if (functionName.equals("put_h"))	//put_h(byte[] data, int wts)
-			return put_h((byte[]) args.get(0), (int) args.get(1));
+			response = put_h((byte[]) args.get(0), (int) args.get(1));
 		else if (functionName.equals("storePubKey"))	//storePubKey(RSAPublickey publicKey, int wts)
-			return storePubKey((RSAPublicKeyImpl) args.get(0), (int) args.get(1));
+			response = storePubKey((RSAPublicKeyImpl) args.get(0), (int) args.get(1));
 		else if (functionName.equals("readPublicKeys"))	//readPublicKeys(int RID)
-			return readPublicKeys((int) args.get(0));
+			response = readPublicKeys((int) args.get(0));
 
-		return obj;
+
+		byte[] messageBytes = serialize(response);
+		byte[] MAC = generateMAC(messageBytes);
+		response.add(0, MAC);
+
+		return response;
 	}
 
     private ArrayList<Object> get(String id, int RID) throws InterruptedException {
@@ -115,13 +121,11 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 		return response;
 	}
 
-	private ArrayList<Object> put_k(PublicKeyBlock publicKeyBlock, RSAPublicKeyImpl public_key, int wts) throws NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InterruptedException {
+	private ArrayList<Object> put_k(PublicKeyBlock publicKeyBlock, RSAPublicKeyImpl public_key, int wts) throws NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InterruptedException, IOException, InvalidKeyException {
 
 		ArrayList<Object> response = new ArrayList<Object>();
 
 		String id = SHA1.SHAsum(public_key.getEncoded());
-
-
 
         // check integrity
 		VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), public_key);
