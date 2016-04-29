@@ -258,19 +258,15 @@ public class FS_Library {
 
             response = method.invoke(server, arrayOfArgs);
 
-
-            System.out.println(response.hashCode());
-
-
             // put response in corresponding bucket
             if(response != null) {
                 ArrayList<Object> list;
-                if(responses.containsKey(response.hashCode())) {
-                    list = responses.get(response.hashCode());
+                if(responses.containsKey(Arrays.hashCode(serialize(response)))) {
+                    list = responses.get(Arrays.hashCode(serialize(response)));
                 }
                 else list = new ArrayList<>();
                 list.add(response);
-                responses.put(response.hashCode(), list);
+                responses.put(Arrays.hashCode(serialize(response)), list);
             }
         }
 
@@ -281,7 +277,7 @@ public class FS_Library {
                 ArrayList<Object> responseArray = (ArrayList<Object>) (responses.get(key).get(0));
 
                 //Verify MAC
-                byte[] receivedDigest = serialize(responseArray.get(0));    //Get the MAC from the arrayList
+                byte[] receivedDigest = (byte[]) responseArray.get(0);    //Get the MAC from the arrayList
                 responseArray.remove(0);    //Remove it so we can serialize the whole message without the MAC
 
 
@@ -289,7 +285,7 @@ public class FS_Library {
                 byte[] digest = generateMAC(bytesFromMessage);  //generate the MAC so we can compare
 
                 if(!Arrays.equals(digest, receivedDigest)) {
-                    System.out.println("Message integrity not verified!");
+                    System.out.println("Message integrity (MAC) not verified!");
                     throw new IntegrityViolationException();
                 }
 
