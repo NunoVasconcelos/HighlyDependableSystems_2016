@@ -1,17 +1,13 @@
-package file_system.fs_blockServer;
+package file_system.fs_library;
 
-import file_system.*;
-import sun.security.rsa.RSAPublicKeyImpl;
+import file_system.exceptions.DifferentTimestampException;
+import file_system.exceptions.IntegrityViolationException;
 
 import java.io.IOException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.List;
-
 
 public interface RmiServerIntf extends Remote {
     Object serverRequest(byte[] digest, String functionName, ArrayList<Object> args) throws IOException, InterruptedException, NoSuchAlgorithmException, DifferentTimestampException, IntegrityViolationException, InvalidKeyException;

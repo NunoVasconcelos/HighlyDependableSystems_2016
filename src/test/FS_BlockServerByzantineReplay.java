@@ -1,6 +1,14 @@
-package file_system.fs_blockServer;
+package test;
 
-import file_system.*;
+
+import file_system.exceptions.DifferentTimestampException;
+import file_system.exceptions.IntegrityViolationException;
+import file_system.fs_library.RmiServerIntf;
+import file_system.shared.Block;
+import file_system.shared.ContentHashBlock;
+import file_system.shared.PublicKeyBlock;
+import file_system.utils.SHA1;
+import file_system.utils.VerifyIntegrity;
 import sun.security.rsa.RSAPublicKeyImpl;
 
 import javax.crypto.Mac;
@@ -24,18 +32,18 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
+public class FS_BlockServerByzantineReplay extends UnicastRemoteObject implements RmiServerIntf {
 
-
-
-public class FS_BlockServerByzantineSleep extends UnicastRemoteObject implements RmiServerIntf{
     private Hashtable<String, Block> blocks = new Hashtable<>();
     private List<PublicKey> publicKeys = new ArrayList<>();
     private static String connString;
     private static Registry rmiRegistry;
     private static int port;
     private static SecretKey sharedSecret;
+    private boolean firstBlock = true;
+    private Block byzantineBlock;
 
-    public FS_BlockServerByzantineSleep() throws RemoteException {
+    public FS_BlockServerByzantineReplay() throws RemoteException {
         super(0);    // required to avoid the 'rmic' step, see below
     }
 
@@ -56,7 +64,7 @@ public class FS_BlockServerByzantineSleep extends UnicastRemoteObject implements
         sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 
         //Instantiate RmiServer
-        FS_BlockServerByzantineSleep obj = new FS_BlockServerByzantineSleep();
+        FS_BlockServerByzantineReplay obj = new FS_BlockServerByzantineReplay();
 
         // Bind this object instance to the name "RmiServer"
         connString = "//localhost/RmiServer" + args[0];
@@ -105,25 +113,27 @@ public class FS_BlockServerByzantineSleep extends UnicastRemoteObject implements
 
         Block block;
 
-        ///////////////////////////////////////////////////////
-        ///////////////////  Byzantine Code   /////////////////
 
-        Thread.sleep(6000);
-
-        ///////////////////  Byzantine Code   /////////////////
-        ///////////////////////////////////////////////////////
-
-
-        ArrayList<Object> response = new ArrayList<Object>();
+        ArrayList<Object> response = new ArrayList<>();
         // if publicKeyBlock do not exist, create
         if (!blocks.containsKey(id)) {
             block = new PublicKeyBlock();
             blocks.put(id, block);
         } else {	//If it is any kind of block existent in the hashtable
             block = blocks.get(id);
+
+            ////////////////////////////////////////////////////////////
+            ///////////////////// Byzantine Code   /////////////////////
+            if(firstBlock)
+            {
+                byzantineBlock = block;
+                firstBlock = false;
+            }
+            ///////////////////// Byzantine Code   /////////////////////
+            ////////////////////////////////////////////////////////////
         }
 
-        response.add(block);
+        response.add(byzantineBlock);
         response.add(RID);
         return response;
     }

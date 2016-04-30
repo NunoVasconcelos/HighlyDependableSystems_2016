@@ -1,4 +1,7 @@
-package file_system;
+package file_system.utils;
+
+import file_system.exceptions.IntegrityViolationException;
+import file_system.shared.PublicKeyBlock;
 
 import java.security.PublicKey;
 import java.util.List;

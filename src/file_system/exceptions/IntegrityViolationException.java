@@ -1,3 +1,3 @@
-package file_system;
+package file_system.exceptions;
 
 public class IntegrityViolationException extends Throwable {}

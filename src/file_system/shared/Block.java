@@ -1,4 +1,4 @@
-package file_system;
+package file_system.shared;
 
 import java.time.LocalDateTime;
 

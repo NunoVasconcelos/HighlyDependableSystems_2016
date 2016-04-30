@@ -1,8 +1,14 @@
 package file_system.fs_blockServer;
 
-import file_system.*;
+import file_system.exceptions.DifferentTimestampException;
+import file_system.exceptions.IntegrityViolationException;
+import file_system.fs_library.RmiServerIntf;
+import file_system.shared.Block;
+import file_system.shared.ContentHashBlock;
+import file_system.shared.PublicKeyBlock;
+import file_system.utils.SHA1;
+import file_system.utils.VerifyIntegrity;
 import sun.security.rsa.RSAPublicKeyImpl;
-import sun.security.util.ObjectIdentifier;
 
 
 import javax.crypto.Mac;
@@ -12,11 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -26,15 +30,10 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
 public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf {
 
 	private Hashtable<String, Block> blocks = new Hashtable<>();
 	private List<PublicKey> publicKeys = new ArrayList<>();
-	private static String connString;
-	private static Registry rmiRegistry;
-	private static int port;
 	private static SecretKey sharedSecret;
 
 	public FS_BlockServer() throws RemoteException {
@@ -44,25 +43,23 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	public static void main(String args[]) throws RemoteException, MalformedURLException, InterruptedException {
 		System.out.println("RMI server started");
 
-        try { //special exception handler for registry creation
-			port = Integer.parseInt(args[0]);
-			rmiRegistry = LocateRegistry.createRegistry(port);
+        try { // special exception handler for registry creation
+			LocateRegistry.createRegistry(Integer.parseInt(args[0]));
             System.out.println("java RMI registry created on port " + args[0]);
         } catch (RemoteException e) {
-            //do nothing, error means registry already exists
+            // do nothing, error means registry already exists
             System.out.println("java RMI registry already exists on port " + args[0]);
         }
 
-		//Generate the secret key to create the MACs
+		// Generate the secret key to create the MACs
 		byte[] encoded = "group14SEC2016".getBytes();
 		sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 
-		//Instantiate RmiServer
+		// Instantiate RmiServer
 		FS_BlockServer obj = new FS_BlockServer();
 
 		// Bind this object instance to the name "RmiServer"
-		connString = "//localhost/RmiServer" + args[0];
-		Naming.rebind(connString, obj);
+		Naming.rebind("//localhost/RmiServer" + args[0], obj);
 		System.out.println("PeerServer bound in registry");
 	}
 
@@ -70,7 +67,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 
 		ArrayList<Object> response = new ArrayList<>();
 
-		//Generating the MAC to check with the received MAC
+		// Generating the MAC to check with the received MAC
 		byte[] a = functionName.getBytes();
 		byte[] b = serialize(args);
 		byte[] c = new byte[a.length + b.length];
@@ -84,16 +81,23 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 			throw new IntegrityViolationException();
 		}
 
-		if (functionName.equals("get"))		//get(String id, int RID)
-			response = get((String) args.get(0), (int) args.get(1));
-		else if (functionName.equals("put_k"))	//put_k(PublicKeyBlock publicKey, Signature, int wts)
-			response = put_k((PublicKeyBlock) args.get(0), (RSAPublicKeyImpl) args.get(1),(int) args.get(2));
-		else if (functionName.equals("put_h"))	//put_h(byte[] data, int wts)
-			response = put_h((byte[]) args.get(0), (int) args.get(1));
-		else if (functionName.equals("storePubKey"))	//storePubKey(RSAPublickey publicKey, int wts)
-			response = storePubKey((RSAPublicKeyImpl) args.get(0), (int) args.get(1));
-		else if (functionName.equals("readPublicKeys"))	//readPublicKeys(int RID)
-			response = readPublicKeys((int) args.get(0));
+		switch (functionName) {
+			case "get": //get(String id, int RID)
+				response = get((String) args.get(0), (int) args.get(1));
+				break;
+			case "put_k": //put_k(PublicKeyBlock publicKey, Signature, int wts)
+				response = put_k((PublicKeyBlock) args.get(0), (RSAPublicKeyImpl) args.get(1), (int) args.get(2));
+				break;
+			case "put_h": //put_h(byte[] data, int wts)
+				response = put_h((byte[]) args.get(0), (int) args.get(1));
+				break;
+			case "storePubKey": //storePubKey(RSAPublickey publicKey, int wts)
+				response = storePubKey((RSAPublicKeyImpl) args.get(0), (int) args.get(1));
+				break;
+			case "readPublicKeys": //readPublicKeys(int RID)
+				response = readPublicKeys((int) args.get(0));
+				break;
+		}
 
 
 		byte[] messageBytes = serialize(response);
@@ -107,7 +111,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 
 		Block block;
 
-		ArrayList<Object> response = new ArrayList<Object>();
+		ArrayList<Object> response = new ArrayList<>();
 		// if publicKeyBlock do not exist, create
 		if (!blocks.containsKey(id)) {
 			block = new PublicKeyBlock();
@@ -123,7 +127,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 
 	private ArrayList<Object> put_k(PublicKeyBlock publicKeyBlock, RSAPublicKeyImpl public_key, int wts) throws NoSuchAlgorithmException, IntegrityViolationException, DifferentTimestampException, InterruptedException, IOException, InvalidKeyException {
 
-		ArrayList<Object> response = new ArrayList<Object>();
+		ArrayList<Object> response = new ArrayList<>();
 
 		String id = SHA1.SHAsum(public_key.getEncoded());
 
@@ -146,7 +150,7 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	// store ContentHashBlock
 	private ArrayList<Object> put_h(byte[] data, int wts) throws NoSuchAlgorithmException {
 
-		ArrayList<Object> response = new ArrayList<Object>();
+		ArrayList<Object> response = new ArrayList<>();
 
 		ContentHashBlock contentHashBlock = new ContentHashBlock(data);
 		
@@ -186,12 +190,11 @@ public class FS_BlockServer extends UnicastRemoteObject implements RmiServerIntf
 	private byte[] generateMAC(byte[] data) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
 
 		// create a MAC and initialize with the above key
-		Mac mac = Mac.getInstance(this.sharedSecret.getAlgorithm());
-		mac.init(this.sharedSecret);
+		Mac mac = Mac.getInstance(sharedSecret.getAlgorithm());
+		mac.init(sharedSecret);
 
 		// create a digest from the byte array
-		byte[] digest = mac.doFinal(data);
-		return digest;
+		return mac.doFinal(data);
 	}
 
 	//Copied from FS_Library, to be used in the MAC generation

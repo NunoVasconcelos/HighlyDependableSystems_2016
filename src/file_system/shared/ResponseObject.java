@@ -1,6 +1,4 @@
-package file_system;
-
-import file_system.PublicKeyBlock;
+package file_system.shared;
 
 
 public class ResponseObject {

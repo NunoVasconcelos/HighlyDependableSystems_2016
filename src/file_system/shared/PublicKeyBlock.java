@@ -1,7 +1,6 @@
-package file_system;
+package file_system.shared;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

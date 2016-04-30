@@ -1,30 +1,27 @@
 package file_system.fs_library;
 
-import file_system.*;
-import file_system.fs_blockServer.RmiServerIntf;
+import file_system.exceptions.DifferentTimestampException;
+import file_system.exceptions.IntegrityViolationException;
+import file_system.exceptions.QuorumNotVerifiedException;
+import file_system.shared.ContentHashBlock;
+import file_system.shared.PublicKeyBlock;
+import file_system.utils.SHA1;
+import file_system.utils.VerifyIntegrity;
 import pteidlib.PteidException;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.rmi.Naming;
 import java.security.*;
 import java.security.cert.CertPathValidatorException;
 import java.security.cert.CertificateException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 //import sun.security.pkcs11.wrapper.CK_ATTRIBUTE;
@@ -35,12 +32,11 @@ import java.io.ObjectOutputStream;
 //import sun.security.pkcs11.wrapper.PKCS11Constants;
 
 public class FS_Library {
-	public static final int TAMANHO_BLOCO = 16000;
+	private static final int TAMANHO_BLOCO = 16000;
 	private PrivateKey priv;
 	private PublicKey pub;
 	private String id;
-	private ArrayList<String> serverPorts = new ArrayList<>();
-	private ArrayList<RmiServerIntf> servers = new ArrayList<>();
+    private ArrayList<RmiServerIntf> servers = new ArrayList<>();
     private static final int MAX_BYZANTINE_FAULTS = 1;
     private PublicKey pubKeyRead;
     private int RID = 0;
@@ -53,21 +49,19 @@ public class FS_Library {
 
 	public void fs_init(ArrayList<String> ports) throws Exception, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
 		// read config file
-//        Path path = Paths.get("config.txt");
-//        List<String> configLines = Files.readAllLines(path);
-//        for(String line : configLines) serverPorts.add(line);
-        serverPorts = ports;
-
+        // Path path = Paths.get("config.txt");
+        // List<String> configLines = Files.readAllLines(path);
+        // for(String line : configLines) serverPorts.add(line);
 
         // get remote objects (servers)
         RmiServerIntf server;
-		for(String port : this.serverPorts) {
+		for(String port : ports) {
 			// create RMI connection with each block server
 			server = (RmiServerIntf) Naming.lookup("//localhost/RmiServer" + port);
 			servers.add(server);
 		}
 
-        System.setProperty("sun.rmi.transport.tcp.responseTimeout", "5000"); // TODO: probably not wotking, test
+        System.setProperty("sun.rmi.transport.tcp.responseTimeout", "5000"); // TODO: not working
 
 		// get client Public Key Certificate from the EID Card and register in the Key Server aka Block Server
 		initPublicKey(); // now doing init of privKey as well
@@ -75,9 +69,8 @@ public class FS_Library {
         // generate client id from publicKey
         this.id = SHA1.SHAsum(this.pub.getEncoded());
 
-
 		// store publicKey on Key Server (Block Server)
-        fileSystemRequest("storePubKey", new ArrayList<>(Arrays.asList(this.pub)));
+        fileSystemRequest("storePubKey", new ArrayList<>(Collections.singletonList(this.pub)));
     }
 
     public void fs_write(int pos, byte[] content) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, SignatureException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException, IntegrityViolationException, QuorumNotVerifiedException, DifferentTimestampException {
@@ -85,7 +78,7 @@ public class FS_Library {
         // get publicKeyBlock (which contains content hash block ids)
         String clientId = SHA1.SHAsum(this.pub.getEncoded());
 
-        PublicKeyBlock publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(clientId)));
+        PublicKeyBlock publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Collections.singletonList(clientId)));
 
         if(!publicKeyBlock.getContentHashBlockIds().isEmpty())
             // check integrity
@@ -103,7 +96,7 @@ public class FS_Library {
         if (!contentHashBlockIds.isEmpty()) {
             for (int i = firstBlock; i <= lastBlock; i++) {
                 byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
-                ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(contentHashBlockIds.get(i))));
+                ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Collections.singletonList(contentHashBlockIds.get(i))));
 
                 // verify ContentHashBlock integrity
                 if (!(SHA1.SHAsum(currentBlock.getData()).equals(contentHashBlockIds.get(i)))) {
@@ -170,7 +163,7 @@ public class FS_Library {
 
 		// get publicKeyBlock (which contains content hash block ids)
 		String clientId = SHA1.SHAsum(pubKeyRead.getEncoded());
-        publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(clientId)));
+        publicKeyBlock = (PublicKeyBlock) fileSystemRequest("get", new ArrayList<>(Collections.singletonList(clientId)));
 
         // check integrity
         VerifyIntegrity.verify(publicKeyBlock, publicKeyBlock.getSignature(), pubKeyRead);
@@ -180,7 +173,7 @@ public class FS_Library {
         byte[] result = "".getBytes(); //Byte stream with all the data from the blocks desired
         for (String id : contentHashBlockIds) {
             byte[] dstByteArray = new byte[result.length + TAMANHO_BLOCO];
-            ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Arrays.asList(id)));
+            ContentHashBlock currentBlock = (ContentHashBlock) fileSystemRequest("get", new ArrayList<>(Collections.singletonList(id)));
 
             // verify ContentHashBlock integrity
             if (!(SHA1.SHAsum(currentBlock.getData()).equals(id))) throw new IntegrityViolationException();
@@ -271,7 +264,7 @@ public class FS_Library {
         }
 
         // return response with higher timestamp, if quorum is verified
-        for(Object key : responses.keySet()) {
+        for(Integer key : responses.keySet()) {
             if(responses.get(key).size() >= quorum) {
 
                 ArrayList<Object> responseArray = (ArrayList<Object>) (responses.get(key).get(0));
@@ -290,37 +283,35 @@ public class FS_Library {
                 }
 
                 //Verify the timestamp received from the servers, either from the put functions or the get function
-                if(methodName.equals("put_h") || methodName.equals("put_k"))
-                {
-                    //ArrayList<Object> returns pairs <id, wts> from the put_k or put_h. Since we have a bucket full of
-                    //those with the same timestamp, we just need to grab one of them, and compare the timestamp
-                    if (timestamp != (int) responseArray.get(1))
-                        throw new DifferentTimestampException();
-                    else    //if the timestamp is correct, return the String id, either from the put_k or put_h
-                        return responseArray.get(0);
-                }
-                else if (methodName.equals("get") || methodName.equals("readPublicKeys"))
-                {
-                    //ArrayList<Object> returns pairs <id, rid> from the get function. Since we have a bucket full of
-                    //those with the same timestamp, we just need to grab one of them, and compare the timestamp
-                    if (RID != (int) responseArray.get(1))
-                        throw new DifferentTimestampException();
-                    else    //if the timestamp is correct, return the publicKeyBlock
-                        return responseArray.get(0);
-                }
-                else if(methodName.equals("storePubKey"))
-                {
-                    //Check if the server stored the correct Public Key, in case the server is byzantine
-                    //Response object came in ArrayList with <String id, int wts>
-                    String checkId = (String) responseArray.get(0);
-                    int checkWts = (int) responseArray.get(1);
+                switch (methodName) {
+                    case "put_h":
+                    case "put_k":
+                        //ArrayList<Object> returns pairs <id, wts> from the put_k or put_h. Since we have a bucket full of
+                        //those with the same timestamp, we just need to grab one of them, and compare the timestamp
+                        if (timestamp != (int) responseArray.get(1))
+                            throw new DifferentTimestampException();
+                        else    //if the timestamp is correct, return the String id, either from the put_k or put_h
+                            return responseArray.get(0);
+                    case "get":
+                    case "readPublicKeys":
+                        //ArrayList<Object> returns pairs <id, rid> from the get function. Since we have a bucket full of
+                        //those with the same timestamp, we just need to grab one of them, and compare the timestamp
+                        if (RID != (int) responseArray.get(1))
+                            throw new DifferentTimestampException();
+                        else    //if the timestamp is correct, return the publicKeyBlock
+                            return responseArray.get(0);
+                    case "storePubKey":
+                        //Check if the server stored the correct Public Key, in case the server is byzantine
+                        //Response object came in ArrayList with <String id, int wts>
+                        String checkId = (String) responseArray.get(0);
+                        int checkWts = (int) responseArray.get(1);
 
-                    if (!this.id.equals(checkId))
-                        throw new IntegrityViolationException();
-                    if (timestamp != checkWts)
-                        throw new DifferentTimestampException();
-                    else
-                        return checkId; //Not used in anything, but this function needs to return something. storePubKey was void.
+                        if (!this.id.equals(checkId))
+                            throw new IntegrityViolationException();
+                        if (timestamp != checkWts)
+                            throw new DifferentTimestampException();
+                        else
+                            return checkId; //Not used in anything, but this function needs to return something. storePubKey was void.
 
                 }
             }
@@ -340,8 +331,7 @@ public class FS_Library {
         mac.init(this.sharedSecret);
 
         // create a digest from the byte array
-        byte[] digest = mac.doFinal(data);
-        return digest;
+        return mac.doFinal(data);
     }
 
 	private void generateKeys() throws NoSuchProviderException, NoSuchAlgorithmException {
@@ -359,7 +349,7 @@ public class FS_Library {
         this.sharedSecret = new SecretKeySpec(encoded, "HmacMD5");
 	}
 
-    private Object getHigherTimestamp(ArrayList<PublicKeyBlock> publicKeyBlocks) {
+    private PublicKeyBlock getHigherTimestamp(ArrayList<PublicKeyBlock> publicKeyBlocks) { // TODO: not being used
         PublicKeyBlock higherTimestamp = null;
         for(PublicKeyBlock publicKeyBlock : publicKeyBlocks) {
             if(higherTimestamp == null) higherTimestamp = publicKeyBlock;
